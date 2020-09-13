@@ -1,65 +1,124 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import FeaturedNewsSection from "@/components/FeaturedNewsSection";
+import NewsSection from "@/components/NewsSection";
+import WeatherSection from "@/components/WeatherSection";
+import FeaturedListSection from "@/components/FeaturedListSection";
+import { BASE_URL, getTodaysDate } from "@/components/Helpers";
 
-export default function Home() {
+export default function Home(props) {
+
   return (
-    <div className={styles.container}>
+    <React.Fragment>
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>Home - Namuna News</title>
+        <meta title="description" content="This is a meta description for the Homepage." />
       </Head>
+      <FeaturedNewsSection breakingNews={props.breakingNews} todaysNews={props.todaysNews} nepalNews={props.nepalNews} />
+      <NewsSection title="Sports" news={props.sportsNews} />
+      <NewsSection title="Technology" news={props.technologyNews} />
+      <WeatherSection weatherData={props.weatherData} />
+      <NewsSection title="Education" news={props.educationNews} />
+      <NewsSection title="Worklife" news={props.worklifeNews} />
+      <FeaturedListSection featuredNews={props.featuredNews} videoResources={props.videoResources} />
+    </React.Fragment>
+  );
+}
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+export async function getServerSideProps(context) {
+  const apiUrl = BASE_URL + "/api";
+  const cities = ["Galkot", "Kathmandu", "Tokyo", "Melbourne"];
+  
+  const weatherData = await Promise.all([
+                        fetch("http://api.weatherapi.com/v1/current.json?key=755449ef75734ac0bc634701203107&q=" + cities[0]).then(res => res.json()),
+                        fetch("http://api.weatherapi.com/v1/current.json?key=755449ef75734ac0bc634701203107&q=" + cities[1]).then(res => res.json()),
+                        fetch("http://api.weatherapi.com/v1/current.json?key=755449ef75734ac0bc634701203107&q=" + cities[2]).then(res => res.json()),
+                        fetch("http://api.weatherapi.com/v1/current.json?key=755449ef75734ac0bc634701203107&q=" + cities[3]).then(res => res.json())
+                      ]);
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+  const [categoriesData, newsData, resourcesData] = await Promise.all([
+                          fetch(`${apiUrl}/categories/all`).then(res => res.json()),
+                          fetch(`${apiUrl}/news/all`).then(res => res.json()),
+                          fetch(`${apiUrl}/resources/all`).then(res => res.json())
+                          ]);
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+  // Get today's date
+  const todaysDate = getTodaysDate();
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+  // Get breaking news and grab the first 3 news items
+  let breakingNews = newsData.data.filter(newsItem => newsItem.news_label.toLowerCase() == "breaking");
+  breakingNews = breakingNews.slice(0, 3);
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
+  // Get today's news and grab the first 4 news items
+  let todaysNews = newsData.data.filter(newsItem => /*newsItem.created_at.substring(0, 10) == todaysDate &&*/ newsItem.news_label.toLowerCase() == "featured");
+  todaysNews = todaysNews.slice(0, 4);
 
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+  // Get featured news and grab the first 4 items
+  let featuredNews = newsData.data.filter(newsItem => newsItem.news_label.toLowerCase() == "featured");
+  featuredNews = featuredNews.slice(0, 4);
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+  // Get video resources and grab the first 2 items
+  let videoResources = resourcesData.data.filter(item => item.type == "video");
+  videoResources = videoResources.slice(0, 2);
+
+  // Initialise category news lists
+  let nepalNews = [];
+  let sportsNews = [];
+  let technologyNews = [];
+  let educationNews = [];
+  let worklifeNews = [];
+  // Populate each category news list with the corresponding news from the categories data
+  for (let i=0; i<categoriesData.data.length; i++) {
+    let category = categoriesData.data[i];
+
+    if (category.slug.toLowerCase() == "nepal") {
+      let newsList = category.news[0];
+      for (let i=0; i<newsList.length; i++) {
+        const newsData = await fetch(`${apiUrl}/news/${newsList[i].id}`).then(res => res.json());
+        nepalNews.push(newsData.data);
+      }
+    }
+    if (category.slug.toLowerCase() == "sports") {
+      let newsList = category.news[0];
+      for (let i=0; i<newsList.length; i++) {
+        const newsData = await fetch(`${apiUrl}/news/${newsList[i].id}`).then(res => res.json());
+        sportsNews.push(newsData.data);
+      }
+    }
+    if (category.slug.toLowerCase() == "technology") {
+      let newsList = category.news[0];
+      for (let i=0; i<newsList.length; i++) {
+        const newsData = await fetch(`${apiUrl}/news/${newsList[i].id}`).then(res => res.json());
+        technologyNews.push(newsData.data);
+      }
+    }
+    if (category.slug.toLowerCase() == "education") {
+      let newsList = category.news[0];
+      for (let i=0; i<newsList.length; i++) {
+        const newsData = await fetch(`${apiUrl}/news/${newsList[i].id}`).then(res => res.json());
+        educationNews.push(newsData.data);
+      }
+    }
+    if (category.slug.toLowerCase() == "worklife") {
+      let newsList = category.news[0];
+      for (let i=0; i<newsList.length; i++) {
+        const newsData = await fetch(`${apiUrl}/news/${newsList[i].id}`).then(res => res.json());
+        worklifeNews.push(newsData.data);
+      }
+    }
+  }
+
+  return {
+    props: {
+      weatherData: weatherData,
+      breakingNews: breakingNews,
+      todaysNews: todaysNews,
+      nepalNews: nepalNews,
+      sportsNews: sportsNews,
+      technologyNews: technologyNews,
+      educationNews: educationNews,
+      worklifeNews: worklifeNews,
+      featuredNews: featuredNews,
+      videoResources: videoResources
+    }
+  }
 }

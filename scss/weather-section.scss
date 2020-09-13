@@ -1,0 +1,60 @@
+.weather-section {
+  background-color: $info;
+  padding: 3.5rem 0 2.5rem 0;
+  margin-bottom: 4.5rem;
+
+  .weather-item-container {
+    padding: 0 6rem;
+  }
+
+  @include media-breakpoint-down(xs) {
+    .weather-item-container {
+      padding: 0 1.5rem;
+    }
+  }
+
+  .column1 {
+    text-align: center;
+    color: $white;
+    margin-bottom: 1.5rem;
+
+    .text-weather {
+      font-size: 1.75rem;
+      text-transform: uppercase;
+    }
+  }
+
+  .column2 .weather-item {
+    color: $white;
+    margin-bottom: 1.5rem;
+
+    .current-weather-text {
+      text-align: center;
+      padding-left: 3.5rem;
+      text-transform: capitalize;
+    }
+    .current-weather-info {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      flex-wrap: nowrap;
+      margin-bottom: 1.25rem;
+
+      .current-temp {
+        font-weight: 700;
+        font-size: 1.5rem;
+        margin-left: 1rem;
+        margin-bottom: 0.75rem;
+
+        sup {
+          margin: 0 3px;
+        }
+      }
+    }
+    .current-weather-location {
+      font-weight: 700;
+      font-size: 1.25rem;
+      text-align: center;
+    }
+  }
+}
