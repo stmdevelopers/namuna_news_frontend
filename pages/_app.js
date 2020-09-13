@@ -66,7 +66,7 @@ MyApp.getInitialProps = async (appContext) => {
   pageProps.provinceData = provinces;
   
   // Add categories data to our pageProps
-  pageProps.categoriesData = categoriesData.data;
+  pageProps.categoriesData = categoriesData.data.filter(category => category.display_status == 1);
 
   if (appContext.Component.getInitialProps) {
     pageProps = await appContext.Component.getInitialProps(appContext.ctx);
