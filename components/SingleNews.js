@@ -27,7 +27,7 @@ export default function SingleNews(props) {
             <p className="news-meta">
               <span className="news-meta-item">
                 <ion-icon name="time-outline"></ion-icon>
-                <span>{dateFormat(newsItem.updated_at, "H")} hours ago</span>
+                <span>{dateFormat(props.newsItem.news_translations[0][0].updated_at, "H")} hours ago</span>
               </span>
               <span className="news-meta-item">
                 <ion-icon name="calendar-outline"></ion-icon> 

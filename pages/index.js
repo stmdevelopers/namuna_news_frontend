@@ -11,7 +11,7 @@ export default function Home(props) {
     <React.Fragment>
       <Head>
         <title>Home - Namuna News</title>
-        <meta title="description" content="This is a meta description for the Homepage." />
+        <meta title="description" content="" />
       </Head>
       <FeaturedNewsSection breakingNews={props.breakingNews} todaysNews={props.todaysNews} nepalNews={props.nepalNews} />
       <NewsSection title="Sports" news={props.sportsNews} />
@@ -24,7 +24,7 @@ export default function Home(props) {
   );
 }
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
   const apiUrl = BASE_URL + "/api";
   const cities = ["Galkot", "Kathmandu", "Tokyo", "Melbourne"];
   
@@ -40,9 +40,6 @@ export async function getServerSideProps(context) {
                           fetch(`${apiUrl}/news/all`).then(res => res.json()),
                           fetch(`${apiUrl}/resources/all`).then(res => res.json())
                           ]);
-
-  // Get today's date
-  const todaysDate = getTodaysDate();
 
   // Get breaking news and grab the first 3 news items
   let breakingNews = newsData.data.filter(newsItem => newsItem.news_label.toLowerCase() == "breaking");
@@ -119,6 +116,7 @@ export async function getServerSideProps(context) {
       worklifeNews: worklifeNews,
       featuredNews: featuredNews,
       videoResources: videoResources
-    }
+    },
+    revalidate: 1
   }
 }

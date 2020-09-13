@@ -8,22 +8,54 @@ export default function CategoryPage(props) {
     <React.Fragment>
       <Head>
         <title>{props.categoryData.slug} News - Namuna News</title>
-        <meta title="description" content="This is a meta description for the Single Category page." />
+        <meta title="description" content="" />
       </Head>
       <SingleCategory title={props.categoryData.slug} featuredCategoryNews={props.featuredCategoryNews} subCategoriesData={props.subCategoriesData} />
     </React.Fragment>
   )
 }
 
-export async function getServerSideProps(context) {
+export async function getStaticPaths() {
   const apiUrl = BASE_URL + "/api";
 
-  // Get the category_id from the query parameters
-  const category_id = context.params.cat_id;
-  // Fetch the list of news for the given category_id through the API
-  const categoryData = await fetch(`${apiUrl}/categories/${category_id}`).then(res => res.json());
-  const newsList = categoryData.data.news[0];
+  // Fetch the list of all the categories id through the API to pre-render category pages
+  const response = await fetch(`${apiUrl}/categories/all`);
 
+  let categoryData;
+  if (response.ok) {
+    categoryData = await response.json();
+  } else {
+    return null;
+  }
+
+  // Filter only the active categories
+  categoryData = categoryData.data.filter(category => category.display_status == 1);
+  // Create a list of all the category pages paths
+  const categoryPaths = categoryData.map(category => ({
+    params: { cat_id: category.id.toString() }
+  }));
+
+  return {
+    paths: categoryPaths,
+    fallback: true
+  }
+}
+
+export async function getStaticProps(context) {
+  const apiUrl = BASE_URL + "/api";
+
+  // Fetch the list of news for the given category_id through the API
+  const response1 = await fetch(`${apiUrl}/categories/${context.params.cat_id}`);
+
+  let categoryData;
+  if (response1.ok) {
+    categoryData = await response1.json();
+  } else {
+    return null;
+  }
+
+  // Get all the news for this category
+  const newsList = categoryData.data.news[0];
   // Initialise category news list
   let featuredCategoryNews = [];
   // Populate each category news list with the corresponding news data from the news list by fetching them from the API
@@ -35,17 +67,25 @@ export async function getServerSideProps(context) {
   }
 
   // Get the list of all the categories from the API
-  const categoriesData = await fetch(`${apiUrl}/categories/all`).then(res => res.json());
+  const response2 = await fetch(`${apiUrl}/categories/all`);
+
+  let categoriesData;
+  if (response2.ok) {
+    categoriesData = await response2.json();
+  } else {
+    return null;
+  }
+  
   // Filter the categories list to get the list of all the subcategories of the current category
-  const categoriesList = categoriesData.data.filter(category => category.display_status == 1 && category.parent_id == category_id);
+  const categoriesList = categoriesData.data.filter(category => category.display_status == 1 && category.parent_id == context.params.cat_id);
 
   // Initialise subcategories array
   let subCategoriesData = [];
   // Foreach category in categories list
   for (let i=0; i<categoriesList.length; i++) {
-    // Grab the news list for that category
-    const news = categoriesList[i].news[0];
-    // Fetch all the news data of that category
+    // Grab the active news list for that category
+    const news = categoriesList[i].news[0].filter(newsItem => newsItem.status == "active");
+    // Fetch all the news data for those news
     let newsData = [];
     for (let j=0; j<news.length; j++) {
       const newsItem = await fetch(`${apiUrl}/news/${news[j].id}`).then(res => res.json());
@@ -60,6 +100,7 @@ export async function getServerSideProps(context) {
       categoryData: categoryData.data,
       featuredCategoryNews: featuredCategoryNews,
       subCategoriesData: subCategoriesData
-    }
+    },
+    revalidate: 1
   }
 }

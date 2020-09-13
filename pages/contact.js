@@ -5,7 +5,7 @@ export default function Contact() {
     <React.Fragment>
       <Head>
         <title>Contact - Namuna News</title>
-        <meta title="description" content="This is a meta description for the Contact page." />
+        <meta title="description" content="" />
       </Head>
       <section>
         <h1>This is the Contact page.</h1>
