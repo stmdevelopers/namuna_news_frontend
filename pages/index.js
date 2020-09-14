@@ -1,12 +1,12 @@
 import Head from "next/head";
+import axios from "axios";
 import FeaturedNewsSection from "@/components/FeaturedNewsSection";
 import NewsSection from "@/components/NewsSection";
 import WeatherSection from "@/components/WeatherSection";
 import FeaturedListSection from "@/components/FeaturedListSection";
-import { BASE_URL, getTodaysDate } from "@/components/Helpers";
+import { BASE_URL } from "@/components/Helpers";
 
 export default function Home(props) {
-
   return (
     <React.Fragment>
       <Head>
@@ -26,8 +26,9 @@ export default function Home(props) {
 
 export async function getStaticProps(context) {
   const apiUrl = BASE_URL + "/api";
-  const cities = ["Galkot", "Kathmandu", "Tokyo", "Melbourne"];
   
+  // Fetch weather data through API
+  const cities = ["Galkot", "Kathmandu", "Tokyo", "Melbourne"];
   const weatherData = await Promise.all([
                         fetch("http://api.weatherapi.com/v1/current.json?key=755449ef75734ac0bc634701203107&q=" + cities[0]).then(res => res.json()),
                         fetch("http://api.weatherapi.com/v1/current.json?key=755449ef75734ac0bc634701203107&q=" + cities[1]).then(res => res.json()),
@@ -35,27 +36,49 @@ export async function getStaticProps(context) {
                         fetch("http://api.weatherapi.com/v1/current.json?key=755449ef75734ac0bc634701203107&q=" + cities[3]).then(res => res.json())
                       ]);
 
-  const [categoriesData, newsData, resourcesData] = await Promise.all([
-                          fetch(`${apiUrl}/categories/all`).then(res => res.json()),
-                          fetch(`${apiUrl}/news/all`).then(res => res.json()),
-                          fetch(`${apiUrl}/resources/all`).then(res => res.json())
-                          ]);
+  // Fetch news data through API
+  let newsData = null;
+  let breakingNews = null;
+  let todaysNews = null;
+  let featuredNews = null;
+  try {
+    const response = await axios.get(`${apiUrl}/news/all`);
+    newsData = response.data;
+  } catch (err) {
+    console.error(err);
+  }
 
   // Get breaking news and grab the first 3 news items
-  let breakingNews = newsData.data.filter(newsItem => newsItem.news_label.toLowerCase() == "breaking");
+  breakingNews = newsData.data.filter(newsItem => newsItem.news_label.toLowerCase() == "breaking");
   breakingNews = breakingNews.slice(0, 3);
-
   // Get today's news and grab the first 4 news items
-  let todaysNews = newsData.data.filter(newsItem => /*newsItem.created_at.substring(0, 10) == todaysDate &&*/ newsItem.news_label.toLowerCase() == "featured");
+  todaysNews = newsData.data.filter(newsItem => /*newsItem.created_at.substring(0, 10) == todaysDate &&*/ newsItem.news_label.toLowerCase() == "featured");
   todaysNews = todaysNews.slice(0, 4);
-
   // Get featured news and grab the first 4 items
-  let featuredNews = newsData.data.filter(newsItem => newsItem.news_label.toLowerCase() == "featured");
+  featuredNews = newsData.data.filter(newsItem => newsItem.news_label.toLowerCase() == "featured");
   featuredNews = featuredNews.slice(0, 4);
 
+  // Fetch resources data through API
+  let resourcesData = null;
+  let videoResources = null;
+  try {
+    const response = await axios.get(`${apiUrl}/resources/all`);
+    resourcesData = response.data;
+  } catch (err) {
+    console.error(err);
+  }
   // Get video resources and grab the first 2 items
-  let videoResources = resourcesData.data.filter(item => item.type == "video");
+  videoResources = resourcesData.data.filter(item => item.type == "video");
   videoResources = videoResources.slice(0, 2);
+
+  // Fetch categories data using an API call
+  let categoriesData = null;
+  try {
+    const response = await axios.get(`${apiUrl}/categories/all`);
+    categoriesData = response.data;
+  } catch (err) {
+    console.error(err);
+  }
 
   // Initialise category news lists
   let nepalNews = [];
@@ -106,6 +129,7 @@ export async function getStaticProps(context) {
 
   return {
     props: {
+      newsData: newsData,
       weatherData: weatherData,
       breakingNews: breakingNews,
       todaysNews: todaysNews,
@@ -116,7 +140,6 @@ export async function getStaticProps(context) {
       worklifeNews: worklifeNews,
       featuredNews: featuredNews,
       videoResources: videoResources
-    },
-    revalidate: 1
+    }
   }
 }

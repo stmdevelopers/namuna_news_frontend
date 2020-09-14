@@ -6,7 +6,7 @@ export default function RelatedNewsSection(props) {
   const baseUrl = BASE_URL;
 
   // Grab the first 6 news to display
-  const newsList = props.news.slice(0, 6);
+  let newsList = props.news ? props.news.slice(0, 6) : null;
 
   return (
     <div className="row">

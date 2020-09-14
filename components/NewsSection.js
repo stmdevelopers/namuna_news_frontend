@@ -6,7 +6,7 @@ export default function NewsSection(props) {
   const baseUrl = BASE_URL;
 
   // Grab the first 4 news to display
-  const newsList = props.news.slice(0, 4);
+  const newsList = props.news ? props.news.slice(0, 4) : [];
 
   return (
     <div className="container">

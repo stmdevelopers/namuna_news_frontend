@@ -7,9 +7,10 @@ export default function FeaturedNewsSection(props) {
   const baseUrl = BASE_URL;
 
   // Grab the first 4 news to show for Nepal News section
-  const nepalNews = props.nepalNews.filter(newsItem => newsItem.news_label != "featured").slice(0, 4);
-  const featuredNepalNews = props.nepalNews.filter(newsItem => newsItem.news_label == "featured").slice(0, 3);
+  const nepalNews = props.nepalNews ? props.nepalNews.filter(newsItem => newsItem.news_label != "featured").slice(0, 4) : [];
+  const featuredNepalNews = props.nepalNews ? props.nepalNews.filter(newsItem => newsItem.news_label == "featured").slice(0, 3) : [];
   const nepal_category_id = nepalNews[0] ? nepalNews[0].category.id : 0;
+  const breakingNews = props.breakingNews ? props.breakingNews : [];
 
   return (
     <React.Fragment>
@@ -21,62 +22,62 @@ export default function FeaturedNewsSection(props) {
               <section className="breaking-news">
                 <h3 className="featured-section-heading">Breaking News</h3>
                 <div className="breaking-news-list">
-                  {props.breakingNews[0] && (
+                  {breakingNews[0] && (
                     <article className="news-item featured-news-item">
                       <div className="news-img-area">
-                        <img className="img-fluid" src={`${baseUrl}${props.breakingNews[0].featured_image}`} />
-                        <span className="news-time">{dateFormat(props.breakingNews[0].updated_at, "H")} hours ago</span>
+                        <img className="img-fluid" src={`${baseUrl}${breakingNews[0].featured_image}`} />
+                        <span className="news-time">{dateFormat(breakingNews[0].updated_at, "H")} hours ago</span>
                       </div>
-                      <Link href={`/news/${props.breakingNews[0].id}`}>
+                      <Link href={`/news/${breakingNews[0].id}`}>
                         <a className="news-title">
-                          {props.breakingNews[0].news_translations[0][0].title}
+                          {breakingNews[0].news_translations[0][0].title}
                         </a>
                       </Link>
                       <p className="news-meta">
                         <ion-icon name="calendar-outline"></ion-icon> 
-                        <span>{getPublishedDate(props.breakingNews[0].created_at.substring(0, 10))}</span> | 
-                        <span>{props.breakingNews[0].category.slug}</span>
+                        <span>{getPublishedDate(breakingNews[0].created_at.substring(0, 10))}</span> | 
+                        <span>{breakingNews[0].category.slug}</span>
                       </p>
                     </article>
                   )}
                   
                   <div className="row">
                     <div className="col-sm-6 col-lg-12 col-xl-6">
-                    {props.breakingNews[1] && (
+                    {breakingNews[1] && (
                       <article className="news-item">
                         <div className="news-img-area">
-                          <img className="img-fluid" src={`${baseUrl}${props.breakingNews[1].featured_image}`} />
-                          <span className="news-time">{dateFormat(props.breakingNews[1].updated_at, "H")} hours ago</span>
+                          <img className="img-fluid" src={`${baseUrl}${breakingNews[1].featured_image}`} />
+                          <span className="news-time">{dateFormat(breakingNews[1].updated_at, "H")} hours ago</span>
                         </div>
-                        <Link href={`/news/${props.breakingNews[1].id}`}>
+                        <Link href={`/news/${breakingNews[1].id}`}>
                           <a className="news-title">
-                            {props.breakingNews[1].news_translations[0][0].title}
+                            {breakingNews[1].news_translations[0][0].title}
                           </a>
                         </Link>
                         <p className="news-meta">
                           <ion-icon name="calendar-outline"></ion-icon> 
-                          <span>{getPublishedDate(props.breakingNews[1].created_at.substring(0, 10))}</span> | 
-                          <span>{props.breakingNews[1].category.slug}</span>
+                          <span>{getPublishedDate(breakingNews[1].created_at.substring(0, 10))}</span> | 
+                          <span>{breakingNews[1].category.slug}</span>
                         </p>
                       </article>
                     )}
                     </div>
                     <div className="col-sm-6 col-lg-12 col-xl-6">
-                    {props.breakingNews[2] && (
+                    {breakingNews[2] && (
                       <article className="news-item">
                         <div className="news-img-area">
-                          <img className="img-fluid" src={`${baseUrl}${props.breakingNews[2].featured_image}`} />
-                          <span className="news-time">{dateFormat(props.breakingNews[2].updated_at, "H")} hours ago</span>
+                          <img className="img-fluid" src={`${baseUrl}${breakingNews[2].featured_image}`} />
+                          <span className="news-time">{dateFormat(breakingNews[2].updated_at, "H")} hours ago</span>
                         </div>
-                        <Link href={`/news/${props.breakingNews[2].id}`}>
+                        <Link href={`/news/${breakingNews[2].id}`}>
                           <a className="news-title">
-                            {props.breakingNews[2].news_translations[0][0].title}
+                            {breakingNews[2].news_translations[0][0].title}
                           </a>
                         </Link>
                         <p className="news-meta">
                           <ion-icon name="calendar-outline"></ion-icon> 
-                          <span>{getPublishedDate(props.breakingNews[2].created_at.substring(0, 10))}</span> | 
-                          <span>{props.breakingNews[2].category.slug}</span>
+                          <span>{getPublishedDate(breakingNews[2].created_at.substring(0, 10))}</span> | 
+                          <span>{breakingNews[2].category.slug}</span>
                         </p>
                       </article>
                     )}

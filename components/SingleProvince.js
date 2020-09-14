@@ -6,8 +6,11 @@ import NewsSection from "./NewsSection";
 export default function SingleProvince(props) {
   const baseUrl = BASE_URL;
 
+  let featuredProvinceNews = [];
+  if (props.featuredProvinceNews) {
   // Grab the first 5 news to show for the Popular News section
-  const featuredProvinceNews = props.featuredProvinceNews.slice(0, 5);
+    featuredProvinceNews = props.featuredProvinceNews.slice(0, 5);
+  }
 
   return (
     <React.Fragment>

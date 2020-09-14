@@ -7,9 +7,11 @@ export default function Navbar(props) {
 
   const mainCategoriesList = ["sports", "education", "worklife", "travel", "future", "culture"];
   // Get the categories list from the props
-  let categoriesList = props.categoriesData;
+  let categoriesList = props.categoriesData ? props.categoriesData : [];
   // Sort the categories list according to their id
-  categoriesList.sort((cat1, cat2) => cat1.id - cat2.id);
+  if (categoriesList) {
+    categoriesList.sort((cat1, cat2) => cat1.id - cat2.id);
+  }
   // Intialize Main categories and More categories array
   let mainCategories = [];
   let moreCategories = [];
