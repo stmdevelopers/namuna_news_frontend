@@ -5,9 +5,11 @@ export default function Footer(props) {
 
   const footerCategoriesList = ["health", "sports", "worklife", "education", "travel", "culture", "future", "international", "entertainment"]
   // Get the categories list from the props
-  let categoriesList = props.categoriesData;
-  // Sort the categories list according to their id
-  categoriesList.sort((cat1, cat2) => cat1.id - cat2.id);
+  let categoriesList = props.categoriesData ? props.categoriesData : [];
+  if (categoriesList != []) {
+    // Sort the categories list according to their id
+    categoriesList.sort((cat1, cat2) => cat1.id - cat2.id);
+  }
   // Intialize footer categories array
   let footerCategories = []
   // Populate the Footer categories
@@ -53,20 +55,22 @@ export default function Footer(props) {
             </div>
             <div className="col-sm-6 col-lg-3 column2">
               <h4 className="menu-title">Quick Links:</h4>
-              <ul className="menu-items">
-                {props.provinceData.slice(0, 2) != [] && (
-                  <li><Link href={`/province/${props.provinceData[0].id}`}><a>{props.provinceData[0].slug}</a></Link> | <Link href={`/province/${props.provinceData[1].id}`}><a>{props.provinceData[1].slug}</a></Link></li>
-                )}
-                {props.provinceData.slice(2, 4) != [] && (
-                  <li><Link href={`/province/${props.provinceData[2].id}`}><a>{props.provinceData[2].slug}</a></Link> | <Link href={`/province/${props.provinceData[3].id}`}><a>{props.provinceData[3].slug}</a></Link></li>
-                )}
-                {props.provinceData.slice(4, 6) != [] && (
-                  <li><Link href={`/province/${props.provinceData[4].id}`}><a>{props.provinceData[4].slug}</a></Link> | <Link href={`/province/${props.provinceData[5].id}`}><a>{props.provinceData[5].slug}</a></Link></li>
-                )}
-                {props.provinceData.slice(6, 7) != [] && (
-                  <li><Link href={`/province/${props.provinceData[6].id}`}><a>{props.provinceData[6].slug}</a></Link></li>
-                )}
-              </ul>  
+              {props.provinceData && (
+                <ul className="menu-items">
+                  {props.provinceData.slice(0, 2) != [] && (
+                    <li><Link href={`/province/${props.provinceData[0].id}`}><a>{props.provinceData[0].slug}</a></Link> | <Link href={`/province/${props.provinceData[1].id}`}><a>{props.provinceData[1].slug}</a></Link></li>
+                  )}
+                  {props.provinceData.slice(2, 4) != [] && (
+                    <li><Link href={`/province/${props.provinceData[2].id}`}><a>{props.provinceData[2].slug}</a></Link> | <Link href={`/province/${props.provinceData[3].id}`}><a>{props.provinceData[3].slug}</a></Link></li>
+                  )}
+                  {props.provinceData.slice(4, 6) != [] && (
+                    <li><Link href={`/province/${props.provinceData[4].id}`}><a>{props.provinceData[4].slug}</a></Link> | <Link href={`/province/${props.provinceData[5].id}`}><a>{props.provinceData[5].slug}</a></Link></li>
+                  )}
+                  {props.provinceData.slice(6, 7) != [] && (
+                    <li><Link href={`/province/${props.provinceData[6].id}`}><a>{props.provinceData[6].slug}</a></Link></li>
+                  )}
+                </ul> 
+              )} 
             </div>
             <div className="col-sm-6 col-lg-3 column3">
               <h4 className="menu-title">Contact Us:</h4>
@@ -84,12 +88,14 @@ export default function Footer(props) {
         <div className="footer-bottom-content">
           <ul className="footer-bottom-menu">
             <li><Link href="/"><a>Home</a></Link></li><span className="divider"></span>
-            {footerCategories && footerCategories.slice(0, footerCategories.length - 1).map(category => (
+            {footerCategories.slice(0, footerCategories.length - 1) != [] && footerCategories.slice(0, footerCategories.length - 1).map(category => (
               <li key={category.id}>
                 <Link href={`/category/${category.id}`}><a>{category.slug}</a></Link><span className="divider"></span>
               </li>
             ))}
-            <li><Link href={`/category/${footerCategories[footerCategories.length - 1].id}`}><a>{footerCategories[footerCategories.length - 1].slug}</a></Link></li>
+            {footerCategories[footerCategories.length - 1] && (
+              <li><Link href={`/category/${footerCategories[footerCategories.length - 1].id}`}><a>{footerCategories[footerCategories.length - 1].slug}</a></Link></li>
+            )}
           </ul>
         </div>
         <p className="copyright-text">

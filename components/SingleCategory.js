@@ -5,8 +5,11 @@ import NewsSection from "./NewsSection";
 export default function SingleCategory(props) {
   const baseUrl = BASE_URL;
 
-  // Grab the first 5 news to show for the Popular News section
-  const featuredCategoryNews = props.featuredCategoryNews.slice(0, 5);
+  let featuredCategoryNews = [];
+  if (props.featuredCategoryNews) {
+    // Grab the first 5 news to show for the Popular News section
+    featuredCategoryNews = props.featuredCategoryNews.slice(0, 5);
+  }
 
   return (
     <React.Fragment>

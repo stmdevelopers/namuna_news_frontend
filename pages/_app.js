@@ -15,14 +15,6 @@ const TopProgressBar = dynamic(
   { ssr: false },
 );
 
-// Dynamically import the GotoProgressBar component
-// const GotoTopButton = dynamic(
-//   () => {
-//     return import("@/components/GotoTopButton");
-//   },
-//   { ssr: false },
-// );
-
 function MyApp({ Component, pageProps }) {
   return (
     <React.Fragment>
@@ -40,7 +32,6 @@ function MyApp({ Component, pageProps }) {
       <Navbar categoriesData={pageProps.categoriesData} />
       <Component {...pageProps} />
       <Footer provinceData={pageProps.provinceData} categoriesData={pageProps.categoriesData} />
-      {/* <GotoTopButton /> */}
       <SocialIcons />
     </React.Fragment>
   )
@@ -59,14 +50,16 @@ MyApp.getInitialProps = async (appContext) => {
 
   let provinces = [];
   // Grab only the provinces that are enabled
-  provinces = provincesData.data.filter(province => province.display_status == 1);
+  provinces = provincesData ? provincesData.data.filter(province => province.display_status == 1) : [];
   // Reverse the province list to order them
   provinces = provinces.reverse();
   // Add provinces to our pageProps
   pageProps.provinceData = provinces;
   
   // Add categories data to our pageProps
-  pageProps.categoriesData = categoriesData.data.filter(category => category.display_status == 1);
+  let categories = [];
+  categories = categoriesData ? categoriesData.data.filter(category => category.display_status == 1) : [];
+  pageProps.categoriesData = categories;
 
   if (appContext.Component.getInitialProps) {
     pageProps = await appContext.Component.getInitialProps(appContext.ctx);

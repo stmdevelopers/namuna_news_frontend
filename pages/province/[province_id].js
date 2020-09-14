@@ -1,16 +1,16 @@
 import Head from "next/head";
+import axios from "axios";
 import { BASE_URL } from "@/components/Helpers";
 import SingleProvince from "@/components/SingleProvince";
 
 export default function ProvincePage(props) {
-
   return (
     <React.Fragment>
       <Head>
-        <title>{props.provincePageData.slug} News - Namuna News</title>
+        <title>{props.provincePageData ? props.provincePageData.slug : ""} News - Namuna News</title>
         <meta title="description" content="" />
       </Head>
-      <SingleProvince title={props.provincePageData.slug} featuredProvinceNews={props.featuredProvinceNews} />
+      <SingleProvince title={props.provincePageData ? props.provincePageData.slug : ""} featuredProvinceNews={props.featuredProvinceNews} />
     </React.Fragment>
   )
 }
@@ -19,13 +19,12 @@ export async function getStaticPaths() {
   const apiUrl = BASE_URL + "/api";
 
   // Fetch the list of all the provinces id through the API to pre-render province pages
-  const response = await fetch(`${apiUrl}/province/all`);
-
   let provinceData;
-  if (response.ok) {
-    provinceData = await response.json();
-  } else {
-    return null;
+  try {
+    const response = await axios.get(`${apiUrl}/province/all`);
+    provinceData = response.data;
+  } catch (err) {
+    console.error(err);
   }
 
   // Filter only the active provinces
@@ -45,13 +44,12 @@ export async function getStaticProps(context) {
   const apiUrl = BASE_URL + "/api";
 
   // Fetch the list of news for all the available province pages through the API
-  const response = await fetch(`${apiUrl}/province/${context.params.province_id}`)
-  
   let provinceData;
-  if (response.ok) {
-    provinceData = await response.json();
-  } else {
-    return null;
+  try {
+    const response = await axios.get(`${apiUrl}/province/${context.params.province_id}`);
+    provinceData = response.data;
+  } catch (err) {
+    console.error(err);
   }
 
   // Get the list of all the news for this province

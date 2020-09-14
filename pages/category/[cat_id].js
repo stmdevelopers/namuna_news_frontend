@@ -1,16 +1,17 @@
 import Head from "next/head";
-import { BASE_URL, categoryImages } from "@/components/Helpers";
+import axios from "axios";
+import { BASE_URL } from "@/components/Helpers";
 import SingleCategory from "@/components/SingleCategory";
 
 export default function CategoryPage(props) {
-
+  
   return (
     <React.Fragment>
       <Head>
-        <title>{props.categoryData.slug} News - Namuna News</title>
+        <title>{props.categoryData ? props.categoryData.slug : ""} News - Namuna News</title>
         <meta title="description" content="" />
       </Head>
-      <SingleCategory title={props.categoryData.slug} featuredCategoryNews={props.featuredCategoryNews} subCategoriesData={props.subCategoriesData} />
+      <SingleCategory title={props.categoryData ? props.categoryData.slug : ""} featuredCategoryNews={props.featuredCategoryNews} subCategoriesData={props.subCategoriesData} />
     </React.Fragment>
   )
 }
@@ -19,13 +20,12 @@ export async function getStaticPaths() {
   const apiUrl = BASE_URL + "/api";
 
   // Fetch the list of all the categories id through the API to pre-render category pages
-  const response = await fetch(`${apiUrl}/categories/all`);
-
   let categoryData;
-  if (response.ok) {
-    categoryData = await response.json();
-  } else {
-    return null;
+  try {
+    const response = await axios.get(`${apiUrl}/categories/all`);
+    categoryData = response.data;
+  } catch (err) {
+    console.error(err);
   }
 
   // Filter only the active categories
@@ -44,14 +44,15 @@ export async function getStaticPaths() {
 export async function getStaticProps(context) {
   const apiUrl = BASE_URL + "/api";
 
+  // Get the cat_id from the query parameters
+  const cat_id = context.params.cat_id;
   // Fetch the list of news for the given category_id through the API
-  const response1 = await fetch(`${apiUrl}/categories/${context.params.cat_id}`);
-
   let categoryData;
-  if (response1.ok) {
-    categoryData = await response1.json();
-  } else {
-    return null;
+  try {
+    const response = await axios.get(`${apiUrl}/categories/${cat_id}`);
+    categoryData = response.data;
+  } catch (err) {
+    console.error(err);
   }
 
   // Get all the news for this category
@@ -67,17 +68,16 @@ export async function getStaticProps(context) {
   }
 
   // Get the list of all the categories from the API
-  const response2 = await fetch(`${apiUrl}/categories/all`);
-
   let categoriesData;
-  if (response2.ok) {
-    categoriesData = await response2.json();
-  } else {
-    return null;
+  try {
+    const response = await axios.get(`${apiUrl}/categories/all`);
+    categoriesData = response.data;
+  } catch (err) {
+    console.error(err);
   }
   
   // Filter the categories list to get the list of all the subcategories of the current category
-  const categoriesList = categoriesData.data.filter(category => category.display_status == 1 && category.parent_id == context.params.cat_id);
+  const categoriesList = categoriesData.data.filter(category => category.display_status == 1 && category.parent_id == cat_id);
 
   // Initialise subcategories array
   let subCategoriesData = [];
@@ -100,7 +100,6 @@ export async function getStaticProps(context) {
       categoryData: categoryData.data,
       featuredCategoryNews: featuredCategoryNews,
       subCategoriesData: subCategoriesData
-    },
-    revalidate: 1
+    }
   }
 }
