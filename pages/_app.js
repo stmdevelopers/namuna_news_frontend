@@ -1,4 +1,5 @@
 import "../scss/main.scss";
+import axios from "axios";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 import { BASE_URL } from "@/components/Helpers";
@@ -42,11 +43,14 @@ MyApp.getInitialProps = async (appContext) => {
 
   const apiUrl = BASE_URL + "/api";
 
-  // Fetch provinces data and categories data using an API call
-  const [provincesData, categoriesData] = await Promise.all([
-                            fetch(`${apiUrl}/province/all`).then(res => res.json()),
-                            fetch(`${apiUrl}/categories/all`).then(res => res.json())
-                          ]);
+  // Fetch provinces data using an API call
+  let provincesData = null;
+  try {
+    const response = await axios.get(`${apiUrl}/province/all`);
+    provincesData = await response.data;
+  } catch (err) {
+    console.log(err);
+  }
 
   let provinces = [];
   // Grab only the provinces that are enabled
@@ -55,8 +59,17 @@ MyApp.getInitialProps = async (appContext) => {
   provinces = provinces.reverse();
   // Add provinces to our pageProps
   pageProps.provinceData = provinces;
+
+  // Fetch categories data using an API call
+  let categoriesData = null;
+  try {
+    const response = await axios.get(`${apiUrl}/categories/all`);
+    categoriesData = await response.data;
+  } catch (err) {
+    console.log(err);
+  }
   
-  // Add categories data to our pageProps
+  // Add categories data to our pageProps and add only the ones that are active
   let categories = [];
   categories = categoriesData ? categoriesData.data.filter(category => category.display_status == 1) : [];
   pageProps.categoriesData = categories;

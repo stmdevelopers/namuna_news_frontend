@@ -1,6 +1,22 @@
 import SectionHeading from "./SectionHeading";
+import {useState, useEffect} from "react";
+import { WEATHER_API_KEY } from "./Helpers";
 
-export default function WeatherSection({ weatherData }) {
+export default function WeatherSection() {
+  const [weatherData, setWeatherData] = useState([]);
+
+  useEffect(() => {
+    // Fetch weather data through API
+    const cities = ["Galkot", "Kathmandu", "Tokyo", "Melbourne"];
+    Promise.all([fetch(`http://api.weatherapi.com/v1/current.json?key=${WEATHER_API_KEY}&q=` + cities[0]).then(res => res.json()),
+                  fetch(`http://api.weatherapi.com/v1/current.json?key=${WEATHER_API_KEY}&q=` + cities[1]).then(res => res.json()),
+                  fetch(`http://api.weatherapi.com/v1/current.json?key=${WEATHER_API_KEY}&q=` + cities[2]).then(res => res.json()),
+                  fetch(`http://api.weatherapi.com/v1/current.json?key=${WEATHER_API_KEY}&q=` + cities[3]).then(res => res.json())
+                ])
+    .then(res => setWeatherData(res))
+    .catch(err => console.log(err))
+  }, []);
+
   return (
     <section className="weather-section">
       <div className="container">

@@ -13,10 +13,11 @@ export default function Home(props) {
         <title>Home - Namuna News</title>
         <meta title="description" content="" />
       </Head>
+      
       <FeaturedNewsSection breakingNews={props.breakingNews} todaysNews={props.todaysNews} nepalNews={props.nepalNews} />
       <NewsSection title="Sports" news={props.sportsNews} />
       <NewsSection title="Technology" news={props.technologyNews} />
-      <WeatherSection weatherData={props.weatherData} />
+      <WeatherSection />
       <NewsSection title="Education" news={props.educationNews} />
       <NewsSection title="Worklife" news={props.worklifeNews} />
       <FeaturedListSection featuredNews={props.featuredNews} videoResources={props.videoResources} />
@@ -26,15 +27,6 @@ export default function Home(props) {
 
 export async function getStaticProps(context) {
   const apiUrl = BASE_URL + "/api";
-  
-  // Fetch weather data through API
-  const cities = ["Galkot", "Kathmandu", "Tokyo", "Melbourne"];
-  const weatherData = await Promise.all([
-                        fetch("http://api.weatherapi.com/v1/current.json?key=755449ef75734ac0bc634701203107&q=" + cities[0]).then(res => res.json()),
-                        fetch("http://api.weatherapi.com/v1/current.json?key=755449ef75734ac0bc634701203107&q=" + cities[1]).then(res => res.json()),
-                        fetch("http://api.weatherapi.com/v1/current.json?key=755449ef75734ac0bc634701203107&q=" + cities[2]).then(res => res.json()),
-                        fetch("http://api.weatherapi.com/v1/current.json?key=755449ef75734ac0bc634701203107&q=" + cities[3]).then(res => res.json())
-                      ]);
 
   // Fetch news data through API
   let newsData = null;
@@ -43,9 +35,9 @@ export async function getStaticProps(context) {
   let featuredNews = null;
   try {
     const response = await axios.get(`${apiUrl}/news/all`);
-    newsData = response.data;
+    newsData = await response.data;
   } catch (err) {
-    console.error(err);
+    console.log(err);
   }
 
   // Get breaking news and grab the first 3 news items
@@ -63,9 +55,9 @@ export async function getStaticProps(context) {
   let videoResources = null;
   try {
     const response = await axios.get(`${apiUrl}/resources/all`);
-    resourcesData = response.data;
+    resourcesData = await response.data;
   } catch (err) {
-    console.error(err);
+    console.log(err);
   }
   // Get video resources and grab the first 2 items
   videoResources = resourcesData.data.filter(item => item.type == "video");
@@ -75,9 +67,9 @@ export async function getStaticProps(context) {
   let categoriesData = null;
   try {
     const response = await axios.get(`${apiUrl}/categories/all`);
-    categoriesData = response.data;
+    categoriesData = await response.data;
   } catch (err) {
-    console.error(err);
+    console.log(err);
   }
 
   // Initialise category news lists
@@ -130,7 +122,6 @@ export async function getStaticProps(context) {
   return {
     props: {
       newsData: newsData,
-      weatherData: weatherData,
       breakingNews: breakingNews,
       todaysNews: todaysNews,
       nepalNews: nepalNews,

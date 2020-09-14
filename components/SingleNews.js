@@ -52,9 +52,9 @@ export default function SingleNews(props) {
           <div className="news-share-section d-flex justify-content-start align-items-center">
             <h5 className="news-share-title">Share:</h5>
             <div className="news-share-icons">
-              <a target="_blank" href={`https://www.facebook.com/sharer.php?u=${baseUrl}/news/${props.newsItem ? props.newsItem.id : ""}`}><ion-icon name="logo-facebook"></ion-icon></a>
-              <a target="_blank" href={`https://twitter.com/share?text=${props.newsItem ? props.newsItem.news_translations[0][0].title : ""}&url=${baseUrl}/news/${props.newsItem ? props.newsItem.id : ""}&via=${baseUrl}`}><ion-icon name="logo-twitter"></ion-icon></a>
-              <a target="_blank" href={`https://www.linkedin.com/shareArticle?mini=true&url=${baseUrl}/news/${props.newsItem ? props.newsItem.id : ""}&title=${props.newsItem ? props.newsItem.news_translations[0][0].title : ""}`}><ion-icon name="logo-linkedin"></ion-icon></a>
+              <a target="_blank" href={`https://www.facebook.com/sharer.php?u=namunasnews.com/news/${props.newsItem ? props.newsItem.id : ""}`}><ion-icon name="logo-facebook"></ion-icon></a>
+              <a target="_blank" href={`https://twitter.com/share?text=${props.newsItem ? props.newsItem.news_translations[0][0].title : ""}&url=namunasnews.com/news/${props.newsItem ? props.newsItem.id : ""}&via=namunasnews.com`}><ion-icon name="logo-twitter"></ion-icon></a>
+              <a target="_blank" href={`https://www.linkedin.com/shareArticle?mini=true&url=namunasnews.com/news/${props.newsItem ? props.newsItem.id : ""}&title=${props.newsItem ? props.newsItem.news_translations[0][0].title : ""}`}><ion-icon name="logo-linkedin"></ion-icon></a>
             </div>
           </div>
         </section>
