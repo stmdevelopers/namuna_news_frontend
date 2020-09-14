@@ -1,7 +1,7 @@
 import Link from "next/link";
 import dateFormat from "dateformat";
 import SectionHeading from "./SectionHeading";
-import { BASE_URL, getPublishedDate, getTodaysDate } from "./Helpers";
+import { BASE_URL, getPublishedDate } from "./Helpers";
 
 export default function FeaturedNewsSection(props) {
   const baseUrl = BASE_URL;

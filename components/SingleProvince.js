@@ -1,6 +1,6 @@
 import Link from "next/link";
 import dateFormat from "dateformat";
-import { BASE_URL, bannerImages, getPublishedDate } from "@/components/Helpers";
+import { BASE_URL, bannerImages, getPublishedDate } from "./Helpers";
 import NewsSection from "./NewsSection";
 
 export default function SingleProvince(props) {
@@ -16,7 +16,7 @@ export default function SingleProvince(props) {
     <React.Fragment>
       <section className="single-category">
         <div className="banner-section">
-          <img className="img-fluid banner-image" src={bannerImages["sports"]} />
+          <img className="img-fluid banner-image" src={bannerImages["default"]} />
           <div className="banner-image-overlay"></div>
           <h1 className="banner-text">{props.title} News</h1>
         </div>

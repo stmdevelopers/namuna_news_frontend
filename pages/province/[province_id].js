@@ -10,46 +10,47 @@ export default function ProvincePage(props) {
         <title>{props.provincePageData ? props.provincePageData.slug : ""} News - Namuna News</title>
         <meta title="description" content="" />
       </Head>
+      
       <SingleProvince title={props.provincePageData ? props.provincePageData.slug : ""} featuredProvinceNews={props.featuredProvinceNews} />
     </React.Fragment>
   )
 }
 
-export async function getStaticPaths() {
-  const apiUrl = BASE_URL + "/api";
+// export async function getStaticPaths() {
+//   const apiUrl = BASE_URL + "/api";
 
-  // Fetch the list of all the provinces id through the API to pre-render province pages
-  let provinceData;
-  try {
-    const response = await axios.get(`${apiUrl}/province/all`);
-    provinceData = response.data;
-  } catch (err) {
-    console.error(err);
-  }
+//   // Fetch the list of all the provinces id through the API to pre-render province pages
+//   let provinceData = null;
+//   try {
+//     const response = await axios.get(`${apiUrl}/province/all`);
+//     provinceData = await response.data;
+//   } catch (err) {
+//     console.log(err);
+//   }
 
-  // Filter only the active provinces
-  provinceData = provinceData.data.filter(province => province.display_status == 1);
-  // Create a list of all the province pages paths
-  const provincePaths = provinceData.map(province => ({
-    params: { province_id: province.id.toString() },
-  }));
+//   // Filter only the active provinces
+//   provinceData = provinceData.data.filter(province => province.display_status == 1);
+//   // Create a list of all the province pages paths
+//   const provincePaths = provinceData.map(province => ({
+//     params: { province_id: province.id.toString() },
+//   }));
 
-  return {
-    paths: provincePaths,
-    fallback: true
-  }
-}
+//   return {
+//     paths: provincePaths,
+//     fallback: true
+//   }
+// }
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const apiUrl = BASE_URL + "/api";
 
   // Fetch the list of news for all the available province pages through the API
-  let provinceData;
+  let provinceData = null;
   try {
     const response = await axios.get(`${apiUrl}/province/${context.params.province_id}`);
-    provinceData = response.data;
+    provinceData = await response.data;
   } catch (err) {
-    console.error(err);
+    console.log(err);
   }
 
   // Get the list of all the news for this province
@@ -72,6 +73,6 @@ export async function getStaticProps(context) {
       provincePageData: provinceData.data,
       featuredProvinceNews: featuredProvinceNews
     },
-    revalidate: 1
+    // revalidate: 1
   }
 }

@@ -1,17 +1,19 @@
 export const BASE_URL = "http://54.254.62.41";
+export const WEATHER_API_KEY = "755449ef75734ac0bc634701203107";
 
 export const bannerImages = {
-  sports: "/banners/banner.jpg",
-  education: "/banners/banner.jpg",
-  worklife: "/banners/banner.jpg",
-  travel: "/banners/banner.jpg",
-  future: "/banners/banner.jpg",
-  culture: "/banners/banner.jpg",
-  nepal: "/banners/banner.jpg",
-  national: "/banners/banner.jpg",
-  international: "/banners/banner.jpg",
-  climate: "/banners/banner.jpg",
-  health: "/banners/banner.jpg"
+  default: "/banners/banner.jpg",
+  sports: "",
+  education: "",
+  worklife: "",
+  travel: "",
+  future: "",
+  culture: "",
+  nepal: "",
+  national: "",
+  international: "",
+  climate: "",
+  health: ""
 }
 
 export function getPublishedDate(publishedDate) {

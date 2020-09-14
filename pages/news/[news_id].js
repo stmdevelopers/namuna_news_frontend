@@ -10,48 +10,49 @@ export default function NewsPage(props) {
         <title>{props.newsItem ? props.newsItem.news_translations[0][0].title : ""} - Namuna News</title>
         <meta title="description" content="" />
       </Head>
+      
       <SingleNews newsItem={props.newsItem} relatedNews={props.relatedNews} />
     </React.Fragment>
   )
 }
 
-export async function getStaticPaths() {
-  const apiUrl = BASE_URL + "/api";
+// export async function getStaticPaths() {
+//   const apiUrl = BASE_URL + "/api";
 
-  // Fetch the list of all the news items through the API to pre-render news pages
-  let newsItems;
-  try {
-    const response = await axios.get(`${apiUrl}/news/all`);
-    newItems = response.data;
-  } catch (err) {
-    console.error(err);
-  }
+//   // Fetch the list of all the news items through the API to pre-render news pages
+//   let newsItems = null;
+//   try {
+//     const response = await axios.get(`${apiUrl}/news/all`);
+//     newsItems = await response.data;
+//   } catch (err) {
+//     console.log(err);
+//   }
 
-  // Filter only the active news items
-  newsItems = newsItems ? newsItems.data.filter(item => item.status == "active") : [];
-  // Create a list of all the news pages paths
-  const newsPaths = newsItems.map(newsItem => ({
-    params: { news_id: newsItem.id.toString() }
-  }));
+//   // Filter only the active news items
+//   newsItems = newsItems ? newsItems.data.filter(item => item.status == "active") : [];
+//   // Create a list of all the news pages paths
+//   const newsPaths = newsItems.map(newsItem => ({
+//     params: { news_id: newsItem.id.toString() }
+//   }));
 
-  return {
-    paths: newsPaths,
-    fallback: true
-  }
-}
+//   return {
+//     paths: newsPaths,
+//     fallback: true
+//   }
+// }
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const apiUrl = BASE_URL + "/api";
 
   // Get the news_id from the query parameters
   const news_id = context.params.news_id;
   // Fetch the news for the given news_id through the API
-  let newsItem;
+  let newsItem = null;
   try {
     const response = await axios.get(`${apiUrl}/news/${news_id}`);
-    newsItem = response.data;
+    newsItem = await response.data;
   } catch (err) {
-    console.error(err);
+    console.log(err);
   }
 
   // Grab the news data for the current news
@@ -60,9 +61,9 @@ export async function getStaticProps(context) {
   let relatedNews;
   try {
     const response = await axios.get(`${apiUrl}/categories/${newsItem.category.id}`);
-    relatedNews = response.data;
+    relatedNews = await response.data;
   } catch (err) {
-    console.error(err);
+    console.log(err);
   }
 
   // Filter the related news to exclude the current newsItem as well as the news that are not active
@@ -80,6 +81,6 @@ export async function getStaticProps(context) {
       newsItem: newsItem,
       relatedNews: relatedNews
     },
-    revalidate: 1
+    // revalidate: 1
   }
 }

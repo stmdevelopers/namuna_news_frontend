@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BASE_URL, bannerImages, getPublishedDate } from "@/components/Helpers";
+import { BASE_URL, bannerImages, getPublishedDate } from "./Helpers";
 import NewsSection from "./NewsSection";
 
 export default function SingleCategory(props) {
@@ -15,7 +15,7 @@ export default function SingleCategory(props) {
     <React.Fragment>
       <section className="single-category">
         <div className="banner-section">
-          <img className="img-fluid banner-image" src={bannerImages["sports"]} />
+          <img className="img-fluid banner-image" src={bannerImages[props.title.toLowerCase()] == "" ? bannerImages["default"] : bannerImages[props.title.toLowerCase()]} />
           <div className="banner-image-overlay"></div>
           <h1 className="banner-text">{props.title} News</h1>
         </div>
