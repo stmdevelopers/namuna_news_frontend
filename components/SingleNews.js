@@ -1,6 +1,5 @@
 import Link from "next/link";
-import dateFormat from "dateformat";
-import { BASE_URL, getPublishedDate } from "@/components/Helpers";
+import { BASE_URL, getPublishedDate, getPublishedTime } from "@/components/Helpers";
 import RelatedNewsSection from "./RelatedNewsSection";
 
 export default function SingleNews(props) {
@@ -29,11 +28,11 @@ export default function SingleNews(props) {
             <p className="news-meta">
               <span className="news-meta-item">
                 <ion-icon name="time-outline"></ion-icon>
-                <span>{props.newsItem ? dateFormat(props.newsItem.news_translations[0][0].updated_at, "H") : ""} hours ago</span>
+                <span>{props.newsItem ? getPublishedTime(props.newsItem.news_translations[0][0].created_at) : ""}</span>
               </span>
               <span className="news-meta-item">
                 <ion-icon name="calendar-outline"></ion-icon> 
-                <span>{props.newsItem ? getPublishedDate(props.newsItem.news_translations[0][0].created_at.substring(0, 10)) : ""}</span>
+                <span>{props.newsItem ? getPublishedDate(props.newsItem.news_translations[0][0].created_at) : ""}</span>
               </span>
             </p>
             <p className="news-meta-author">

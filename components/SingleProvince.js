@@ -1,6 +1,6 @@
 import Link from "next/link";
 import dateFormat from "dateformat";
-import { BASE_URL, bannerImages, getPublishedDate } from "./Helpers";
+import { BASE_URL, bannerImages, getPublishedDate, getPublishedTime } from "./Helpers";
 import NewsSection from "./NewsSection";
 
 export default function SingleProvince(props) {
@@ -30,7 +30,7 @@ export default function SingleProvince(props) {
                   <article className="news-item featured-news-item">
                     <div className="news-img-area">
                       <img className="img-fluid" src={`${baseUrl}${featuredProvinceNews[0].featured_image}`} />
-                      <span className="news-time">{dateFormat(featuredProvinceNews[0].updated_at, "H")} hours ago</span>
+                      <span className="news-time">{getPublishedTime(featuredProvinceNews[0].created_at)}</span>
                     </div>
                     <Link href={`/news/${featuredProvinceNews[0].id}`}>
                       <a className="news-title">
@@ -39,7 +39,7 @@ export default function SingleProvince(props) {
                     </Link>
                     <p className="news-meta">
                       <ion-icon name="calendar-outline"></ion-icon> 
-                      <span>{getPublishedDate(featuredProvinceNews[0].created_at.substring(0, 10))}</span> | 
+                      <span>{getPublishedDate(featuredProvinceNews[0].created_at)}</span> | 
                       <span>{featuredProvinceNews[0].category.slug}</span>
                     </p>
                   </article>
@@ -52,7 +52,7 @@ export default function SingleProvince(props) {
                     <article className="news-item">
                       <div className="news-img-area">
                         <img className="img-fluid" src={`${baseUrl}${featuredProvinceNews[1].featured_image}`} />
-                        <span className="news-time">{dateFormat(featuredProvinceNews[1].updated_at, "H")} hours ago</span>
+                        <span className="news-time">{getPublishedTime(featuredProvinceNews[1].created_at)}</span>
                       </div>
                       <Link href={`/news/${featuredProvinceNews[1].id}`}>
                         <a className="news-title">
@@ -61,7 +61,7 @@ export default function SingleProvince(props) {
                       </Link>
                       <p className="news-meta">
                         <ion-icon name="calendar-outline"></ion-icon> 
-                        <span>{getPublishedDate(featuredProvinceNews[1].created_at.substring(0, 10))}</span> | 
+                        <span>{getPublishedDate(featuredProvinceNews[1].created_at)}</span> | 
                         <span>{featuredProvinceNews[1].category.slug}</span>
                       </p>
                     </article>
@@ -72,7 +72,7 @@ export default function SingleProvince(props) {
                       <article className="news-item">
                         <div className="news-img-area">
                           <img className="img-fluid" src={`${baseUrl}${featuredProvinceNews[2].featured_image}`} />
-                          <span className="news-time">{dateFormat(featuredProvinceNews[2].updated_at, "H")} hours ago</span>
+                          <span className="news-time">{getPublishedTime(featuredProvinceNews[2].created_at)}</span>
                         </div>
                         <Link href={`/news/${featuredProvinceNews[2].id}`}>
                           <a className="news-title">
@@ -81,7 +81,7 @@ export default function SingleProvince(props) {
                         </Link>
                         <p className="news-meta">
                           <ion-icon name="calendar-outline"></ion-icon> 
-                          <span>{getPublishedDate(featuredProvinceNews[2].created_at.substring(0, 10))}</span> | 
+                          <span>{getPublishedDate(featuredProvinceNews[2].created_at)}</span> | 
                           <span>{featuredProvinceNews[2].category.slug}</span>
                         </p>
                       </article>
@@ -94,7 +94,7 @@ export default function SingleProvince(props) {
                       <article className="news-item">
                         <div className="news-img-area">
                           <img className="img-fluid" src={`${baseUrl}${featuredProvinceNews[3].featured_image}`} />
-                          <span className="news-time">{dateFormat(featuredProvinceNews[3].updated_at, "H")} hours ago</span>
+                          <span className="news-time">{getPublishedTime(featuredProvinceNews[3].created_at)}</span>
                         </div>
                         <Link href={`/news/${featuredProvinceNews[3].id}`}>
                           <a className="news-title">
@@ -103,7 +103,7 @@ export default function SingleProvince(props) {
                         </Link>
                         <p className="news-meta">
                           <ion-icon name="calendar-outline"></ion-icon> 
-                          <span>{getPublishedDate(featuredProvinceNews[3].created_at.substring(0, 10))}</span> | 
+                          <span>{getPublishedDate(featuredProvinceNews[3].created_at)}</span> | 
                           <span>{featuredProvinceNews[3].category.slug}</span>
                         </p>
                       </article>
@@ -114,7 +114,7 @@ export default function SingleProvince(props) {
                       <article className="news-item">
                         <div className="news-img-area">
                           <img className="img-fluid" src={`${baseUrl}${featuredProvinceNews[4].featured_image}`} />
-                          <span className="news-time">{dateFormat(featuredProvinceNews[4].updated_at, "H")} hours ago</span>
+                          <span className="news-time">{getPublishedTime(featuredProvinceNews[4].created_at)}</span>
                         </div>
                         <Link href={`/news/${featuredProvinceNews[4].id}`}>
                           <a className="news-title">
@@ -123,7 +123,7 @@ export default function SingleProvince(props) {
                         </Link>
                         <p className="news-meta">
                           <ion-icon name="calendar-outline"></ion-icon> 
-                          <span>{getPublishedDate(featuredProvinceNews[4].created_at.substring(0, 10))}</span> | 
+                          <span>{getPublishedDate(featuredProvinceNews[4].created_at)}</span> | 
                           <span>{featuredProvinceNews[4].category.slug}</span>
                         </p>
                       </article>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BASE_URL, bannerImages, getPublishedDate } from "./Helpers";
+import { BASE_URL, bannerImages, getPublishedDate, getPublishedTime } from "./Helpers";
 import NewsSection from "./NewsSection";
 
 export default function SingleCategory(props) {
@@ -29,7 +29,7 @@ export default function SingleCategory(props) {
                   <article className="news-item featured-news-item">
                     <div className="news-img-area">
                       <img className="img-fluid" src={`${baseUrl}${featuredCategoryNews[0].featured_image}`} />
-                      <span className="news-time">24 hours ago</span>
+                      <span className="news-time">{getPublishedTime(featuredCategoryNews[0].created_at)}</span>
                     </div>
                     <Link href={`/news/${featuredCategoryNews[0].id}`}>
                       <a className="news-title">
@@ -38,7 +38,7 @@ export default function SingleCategory(props) {
                     </Link>
                     <p className="news-meta">
                       <ion-icon name="calendar-outline"></ion-icon> 
-                      <span>{getPublishedDate(featuredCategoryNews[0].created_at.substring(0, 10))}</span> | 
+                      <span>{getPublishedDate(featuredCategoryNews[0].created_at)}</span> | 
                       <span>{featuredCategoryNews[0].category.slug}</span>
                     </p>
                   </article>
@@ -51,7 +51,7 @@ export default function SingleCategory(props) {
                     <article className="news-item">
                       <div className="news-img-area">
                         <img className="img-fluid" src={`${baseUrl}${featuredCategoryNews[1].featured_image}`} />
-                        <span className="news-time">24 hours ago</span>
+                        <span className="news-time">{getPublishedTime(featuredCategoryNews[1].created_at)}</span>
                       </div>
                       <Link href={`/news/${featuredCategoryNews[1].id}`}>
                         <a className="news-title">
@@ -60,7 +60,7 @@ export default function SingleCategory(props) {
                       </Link>
                       <p className="news-meta">
                         <ion-icon name="calendar-outline"></ion-icon> 
-                        <span>{getPublishedDate(featuredCategoryNews[1].created_at.substring(0, 10))}</span> | 
+                        <span>{getPublishedDate(featuredCategoryNews[1].created_at)}</span> | 
                         <span>{featuredCategoryNews[1].category.slug}</span>
                       </p>
                     </article>
@@ -71,7 +71,7 @@ export default function SingleCategory(props) {
                       <article className="news-item">
                         <div className="news-img-area">
                           <img className="img-fluid" src={`${baseUrl}${featuredCategoryNews[2].featured_image}`} />
-                          <span className="news-time">24 hours ago</span>
+                          <span className="news-time">{getPublishedTime(featuredCategoryNews[2].created_at)}</span>
                         </div>
                         <Link href={`/news/${featuredCategoryNews[2].id}`}>
                           <a className="news-title">
@@ -80,7 +80,7 @@ export default function SingleCategory(props) {
                         </Link>
                         <p className="news-meta">
                           <ion-icon name="calendar-outline"></ion-icon> 
-                          <span>{getPublishedDate(featuredCategoryNews[2].created_at.substring(0, 10))}</span> | 
+                          <span>{getPublishedDate(featuredCategoryNews[2].created_at)}</span> | 
                           <span>{featuredCategoryNews[2].category.slug}</span>
                         </p>
                       </article>
@@ -93,7 +93,7 @@ export default function SingleCategory(props) {
                       <article className="news-item">
                         <div className="news-img-area">
                           <img className="img-fluid" src={`${baseUrl}${featuredCategoryNews[3].featured_image}`} />
-                          <span className="news-time">24 hours ago</span>
+                          <span className="news-time">{getPublishedTime(featuredCategoryNews[3].created_at)}</span>
                         </div>
                         <Link href={`/news/${featuredCategoryNews[3].id}`}>
                           <a className="news-title">
@@ -102,7 +102,7 @@ export default function SingleCategory(props) {
                         </Link>
                         <p className="news-meta">
                           <ion-icon name="calendar-outline"></ion-icon> 
-                          <span>{getPublishedDate(featuredCategoryNews[3].created_at.substring(0, 10))}</span> | 
+                          <span>{getPublishedDate(featuredCategoryNews[3].created_at)}</span> | 
                           <span>{featuredCategoryNews[3].category.slug}</span>
                         </p>
                       </article>
@@ -113,7 +113,7 @@ export default function SingleCategory(props) {
                       <article className="news-item">
                         <div className="news-img-area">
                           <img className="img-fluid" src={`${baseUrl}${featuredCategoryNews[4].featured_image}`} />
-                          <span className="news-time">24 hours ago</span>
+                          <span className="news-time">{getPublishedTime(featuredCategoryNews[4].created_at)}</span>
                         </div>
                         <Link href={`/news/${featuredCategoryNews[4].id}`}>
                           <a className="news-title">
@@ -122,7 +122,7 @@ export default function SingleCategory(props) {
                         </Link>
                         <p className="news-meta">
                           <ion-icon name="calendar-outline"></ion-icon> 
-                          <span>{getPublishedDate(featuredCategoryNews[4].created_at.substring(0, 10))}</span> | 
+                          <span>{getPublishedDate(featuredCategoryNews[4].created_at)}</span> | 
                           <span>{featuredCategoryNews[4].category.slug}</span>
                         </p>
                       </article>

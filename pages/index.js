@@ -25,7 +25,7 @@ export default function Home(props) {
   );
 }
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const apiUrl = BASE_URL + "/api";
 
   // Fetch news data through API
