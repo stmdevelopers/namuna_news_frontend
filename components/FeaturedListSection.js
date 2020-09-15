@@ -1,7 +1,6 @@
 import Link from "next/link";
-import dateFormat from "dateformat";
 import SectionHeading from "./SectionHeading";
-import { BASE_URL, getPublishedDate } from "./Helpers";
+import { BASE_URL, getPublishedDate, getPublishedTime } from "./Helpers";
 
 export default function FeaturedListSection(props) {  
   const baseUrl = BASE_URL;
@@ -21,7 +20,7 @@ export default function FeaturedListSection(props) {
                       <div className="col-sm-6 col-lg-12 col-xl-6">
                         <div className="news-img-area">
                           <img className="img-fluid" src={`${baseUrl}${newsItem.featured_image}`} />
-                          <span className="news-time">{dateFormat(newsItem.updated_at, "H")} hours ago</span>
+                          <span className="news-time">{getPublishedTime(newsItem.created_at)}</span>
                         </div>
                       </div>
                       <div className="col-sm-6 col-lg-12 col-xl-6">
@@ -33,7 +32,7 @@ export default function FeaturedListSection(props) {
                           </Link>
                           <p className="news-meta">
                             <ion-icon name="calendar-outline"></ion-icon> 
-                            <span>{getPublishedDate(newsItem.created_at.substring(0, 10))}</span> | 
+                            <span>{getPublishedDate(newsItem.created_at)}</span> | 
                             <span>{newsItem.category.slug}</span>
                           </p>
                         </div>
@@ -59,7 +58,7 @@ export default function FeaturedListSection(props) {
                     </p>
                     <p className="news-meta">
                       <ion-icon name="calendar-outline"></ion-icon> 
-                      <span>{getPublishedDate(videoItem.translations[0][0].created_at.substring(0, 10))}</span> | 
+                      <span>{getPublishedDate(videoItem.translations[0][0].created_at)}</span> | 
                       <span>{videoItem.keywords}</span>
                     </p>
                   </article>

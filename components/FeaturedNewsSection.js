@@ -1,7 +1,6 @@
 import Link from "next/link";
-import dateFormat from "dateformat";
 import SectionHeading from "./SectionHeading";
-import { BASE_URL, getPublishedDate } from "./Helpers";
+import { BASE_URL, getPublishedTime, getPublishedDate } from "./Helpers";
 
 export default function FeaturedNewsSection(props) {
   const baseUrl = BASE_URL;
@@ -26,7 +25,7 @@ export default function FeaturedNewsSection(props) {
                     <article className="news-item featured-news-item">
                       <div className="news-img-area">
                         <img className="img-fluid" src={`${baseUrl}${breakingNews[0].featured_image}`} />
-                        <span className="news-time">{dateFormat(breakingNews[0].updated_at, "H")} hours ago</span>
+                        <span className="news-time">{getPublishedTime(breakingNews[0].created_at)}</span>
                       </div>
                       <Link href={`/news/${breakingNews[0].id}`}>
                         <a className="news-title">
@@ -35,7 +34,7 @@ export default function FeaturedNewsSection(props) {
                       </Link>
                       <p className="news-meta">
                         <ion-icon name="calendar-outline"></ion-icon> 
-                        <span>{getPublishedDate(breakingNews[0].created_at.substring(0, 10))}</span> | 
+                        <span>{getPublishedDate(breakingNews[0].created_at)}</span> | 
                         <span>{breakingNews[0].category.slug}</span>
                       </p>
                     </article>
@@ -47,7 +46,7 @@ export default function FeaturedNewsSection(props) {
                       <article className="news-item">
                         <div className="news-img-area">
                           <img className="img-fluid" src={`${baseUrl}${breakingNews[1].featured_image}`} />
-                          <span className="news-time">{dateFormat(breakingNews[1].updated_at, "H")} hours ago</span>
+                          <span className="news-time">{getPublishedTime(breakingNews[1].created_at)}</span>
                         </div>
                         <Link href={`/news/${breakingNews[1].id}`}>
                           <a className="news-title">
@@ -56,7 +55,7 @@ export default function FeaturedNewsSection(props) {
                         </Link>
                         <p className="news-meta">
                           <ion-icon name="calendar-outline"></ion-icon> 
-                          <span>{getPublishedDate(breakingNews[1].created_at.substring(0, 10))}</span> | 
+                          <span>{getPublishedDate(breakingNews[1].created_at)}</span> | 
                           <span>{breakingNews[1].category.slug}</span>
                         </p>
                       </article>
@@ -67,7 +66,7 @@ export default function FeaturedNewsSection(props) {
                       <article className="news-item">
                         <div className="news-img-area">
                           <img className="img-fluid" src={`${baseUrl}${breakingNews[2].featured_image}`} />
-                          <span className="news-time">{dateFormat(breakingNews[2].updated_at, "H")} hours ago</span>
+                          <span className="news-time">{getPublishedTime(breakingNews[2].created_at)}</span>
                         </div>
                         <Link href={`/news/${breakingNews[2].id}`}>
                           <a className="news-title">
@@ -76,7 +75,7 @@ export default function FeaturedNewsSection(props) {
                         </Link>
                         <p className="news-meta">
                           <ion-icon name="calendar-outline"></ion-icon> 
-                          <span>{getPublishedDate(breakingNews[2].created_at.substring(0, 10))}</span> | 
+                          <span>{getPublishedDate(breakingNews[2].created_at)}</span> | 
                           <span>{breakingNews[2].category.slug}</span>
                         </p>
                       </article>
@@ -109,7 +108,7 @@ export default function FeaturedNewsSection(props) {
                       <div className="d-flex">
                         <div className="news-img-area mr-3">
                           <img className="img-fluid" src={`${baseUrl}${newsItem.featured_image}`} />
-                          <span className="news-time">{dateFormat(newsItem.updated_at, "H")} hours ago</span>
+                          <span className="news-time">{getPublishedTime(newsItem.created_at)}</span>
                         </div>
                         <div className="d-flex flex-column justify-content-between">
                           <Link href={`/news/${newsItem.id}`}>
@@ -119,7 +118,7 @@ export default function FeaturedNewsSection(props) {
                           </Link>
                           <p className="news-meta">
                             <ion-icon name="calendar-outline"></ion-icon> 
-                            <span>{getPublishedDate(newsItem.created_at.substring(0, 10))}</span> | 
+                            <span>{getPublishedDate(newsItem.created_at)}</span> | 
                             <span>{newsItem.category.slug}</span>
                           </p>
                         </div>
@@ -172,7 +171,7 @@ export default function FeaturedNewsSection(props) {
                   <article className="news-item" key={newsItem.id}>
                     <div className="news-img-area">
                       <img className="img-fluid" src={`${baseUrl}${newsItem.featured_image}`} />
-                      <span className="news-time">{dateFormat(newsItem.updated_at, "H")} hours ago</span>
+                      <span className="news-time">{getPublishedTime(newsItem.created_at)}</span>
                     </div>
                     <Link href={`/news/${newsItem.id}`}>
                       <a className="news-title">
@@ -181,7 +180,7 @@ export default function FeaturedNewsSection(props) {
                     </Link>
                     <p className="news-meta">
                       <ion-icon name="calendar-outline"></ion-icon> 
-                      <span>{getPublishedDate(newsItem.created_at.substring(0, 10))}</span> | 
+                      <span>{getPublishedDate(newsItem.created_at)}</span> | 
                       <span>{newsItem.category.slug}</span>
                     </p>
                   </article>
@@ -192,7 +191,7 @@ export default function FeaturedNewsSection(props) {
                   <article className="news-item" key={newsItem.id}>
                     <div className="news-img-area">
                       <img className="img-fluid" src={`${baseUrl}${newsItem.featured_image}`} />
-                      <span className="news-time">{dateFormat(newsItem.updated_at, "H")} hours ago</span>
+                      <span className="news-time">{getPublishedTime(newsItem.created_at)}</span>
                     </div>
                     <Link href={`/news/${newsItem.id}`}>
                       <a className="news-title">
@@ -201,7 +200,7 @@ export default function FeaturedNewsSection(props) {
                     </Link>
                     <p className="news-meta">
                       <ion-icon name="calendar-outline"></ion-icon> 
-                      <span>{getPublishedDate(newsItem.created_at.substring(0, 10))}</span> | 
+                      <span>{getPublishedDate(newsItem.created_at)}</span> | 
                       <span>{newsItem.category.slug}</span>
                     </p>
                   </article>

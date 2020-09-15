@@ -1,6 +1,6 @@
 import SectionHeading from "./SectionHeading";
 import Link from "next/link";
-import { BASE_URL, getPublishedDate } from "./Helpers";
+import { BASE_URL, getPublishedDate, getPublishedTime } from "./Helpers";
 
 export default function NewsSection(props) {
   const baseUrl = BASE_URL;
@@ -20,7 +20,7 @@ export default function NewsSection(props) {
                 <article className="news-item">
                   <div className="news-img-area">
                     <img className="img-fluid" src={`${baseUrl}${newsItem.featured_image}`} />
-                    <span className="news-time">24 hours ago</span>
+                    <span className="news-time">{getPublishedTime(newsItem.created_at)}</span>
                   </div>
                   <Link href={`/news/${newsItem.id}`}>
                     <a className="news-title">
@@ -29,7 +29,7 @@ export default function NewsSection(props) {
                   </Link>
                   <p className="news-meta">
                     <ion-icon name="calendar-outline"></ion-icon> 
-                    <span>{getPublishedDate(newsItem.created_at.substring(0, 10))}</span> | 
+                    <span>{getPublishedDate(newsItem.created_at)}</span> | 
                     <span>{newsItem.category.slug}</span>
                   </p>
                 </article>
