@@ -1,7 +1,7 @@
 import dateFormat from "dateformat";
 
 export const BASE_URL = "http://54.254.62.41";
-export const WEATHER_API_KEY = "755449ef75734ac0bc634701203107";
+export const WEATHER_API_KEY = "e1f1e6e805d04eb7862130237201609";
 
 export const bannerImages = {
   default: "/banners/banner.jpg",

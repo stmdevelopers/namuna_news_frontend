@@ -28,6 +28,33 @@
       transform: translateX(-100%);
       transition: transform .4s ease;
     }
+    &:nth-child(1)::after {
+      background-color: $info;
+    }
+    &:nth-child(2)::after {
+      background-color: $danger;
+    }
+    &:nth-child(3)::after {
+      background-color: $secondary;
+    }
+    &:nth-child(4)::after {
+      background-color: $info;
+    }
+    &:nth-child(5)::after {
+      background-color: $warning;
+    }
+    &:nth-child(6)::after {
+      background-color: #9b59b6;
+    }
+    &:nth-child(7)::after {
+      background-color: $success;
+    }
+    &:nth-child(8)::after {
+      background-color: $danger;
+    }
+    &:nth-child(9)::after {
+      background-color: $light;
+    }
 
     &:hover::after, &:active::after {
       //transform: scaleX(1);

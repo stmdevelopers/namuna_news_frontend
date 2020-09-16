@@ -1,7 +1,29 @@
 import Link from "next/link";
-import { getTodaysDate } from "./Helpers";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { BASE_URL, getTodaysDate } from "./Helpers";
 
 export default function Footer(props) {
+  // State declarations
+  const [provinceData, setProvinceData] = useState(null);
+  
+  useEffect(() => {
+    const apiUrl = BASE_URL + "/api";
+
+    // Fetch provinces data using an API call
+    axios.get(`${apiUrl}/province/all`)
+    .then(res => res.data)
+    .then(provincesData => {
+      provincesData = provincesData.data;
+      // Grab only the provinces that are enabled
+      let provinces = provincesData.filter(province => province.display_status == 1);
+      // Reverse the province list to order them
+      provinces = provinces.reverse();
+      // Set provinces data
+      setProvinceData(provinces);
+    })
+    .catch(err => console.log(err));
+  }, []);
 
   const footerCategoriesList = ["health", "sports", "worklife", "education", "travel", "culture", "future", "international", "entertainment"]
   // Get the categories list from the props
@@ -20,17 +42,21 @@ export default function Footer(props) {
     }
   }
 
+  function subscribeEmail(email) {
+
+  }
+
   return (
     <footer className="footer">
       <section className="subscribe-section">
         <h2 className="subscribe-title">Subscribe</h2>
         <p className="subscribe-text">Get Namuna News free every morning and evening.</p>
-        <form method="POST" className="subscribe-form">
+        <form method="POST" action="#" className="subscribe-form">
           <div className="input-group">
             <span className="email-icon"><ion-icon name="mail-outline"></ion-icon></span>
             <input type="text" name="subscribe" className="form-control" placeholder="Enter your email address..." aria-label="subscribe" aria-describedby="btn-subscribe" />
             <div className="input-group-append">
-              <Link href="#"><a id="btn-subscribe" className="btn btn-danger btn-subscribe">Subscribe</a></Link>
+              <input type="submit" value="Subscribe" id="btn-subscribe" className="btn btn-danger btn-subscribe" />
             </div>
           </div>
         </form>
@@ -49,25 +75,25 @@ export default function Footer(props) {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ac dolor lectus. Aenean ipsum ante, mollis quis tristique sed, dignissim id leo. Duis vitae aliquet velit. Duis vitae aliquet velit.
               </p>
               <div className="footer-social-icons">
-                <Link href="#"><a><ion-icon name="logo-facebook"></ion-icon></a></Link>
-                <Link href="#"><a><ion-icon name="logo-youtube"></ion-icon></a></Link>
+                <a href="#"><ion-icon name="logo-facebook"></ion-icon></a>
+                <a href="#"><ion-icon name="logo-youtube"></ion-icon></a>
               </div>
             </div>
             <div className="col-sm-6 col-lg-3 column2">
               <h4 className="menu-title">Quick Links:</h4>
-              {props.provinceData && (
+              {provinceData && (
                 <ul className="menu-items">
-                  {props.provinceData.slice(0, 2) != [] && (
-                    <li><Link href={`/province/${props.provinceData[0].id}`}><a>{props.provinceData[0].slug}</a></Link> | <Link href={`/province/${props.provinceData[1].id}`}><a>{props.provinceData[1].slug}</a></Link></li>
+                  {provinceData.slice(0, 2) && (
+                    <li><Link href={`/province/${provinceData[0].id}`}><a>{provinceData[0].slug}</a></Link> | <Link href={`/province/${provinceData[1].id}`}><a>{provinceData[1].slug}</a></Link></li>
                   )}
-                  {props.provinceData.slice(2, 4) != [] && (
-                    <li><Link href={`/province/${props.provinceData[2].id}`}><a>{props.provinceData[2].slug}</a></Link> | <Link href={`/province/${props.provinceData[3].id}`}><a>{props.provinceData[3].slug}</a></Link></li>
+                  {provinceData.slice(2, 4) && (
+                    <li><Link href={`/province/${provinceData[2].id}`}><a>{provinceData[2].slug}</a></Link> | <Link href={`/province/${provinceData[3].id}`}><a>{provinceData[3].slug}</a></Link></li>
                   )}
-                  {props.provinceData.slice(4, 6) != [] && (
-                    <li><Link href={`/province/${props.provinceData[4].id}`}><a>{props.provinceData[4].slug}</a></Link> | <Link href={`/province/${props.provinceData[5].id}`}><a>{props.provinceData[5].slug}</a></Link></li>
+                  {provinceData.slice(4, 6) && (
+                    <li><Link href={`/province/${provinceData[4].id}`}><a>{provinceData[4].slug}</a></Link> | <Link href={`/province/${provinceData[5].id}`}><a>{provinceData[5].slug}</a></Link></li>
                   )}
-                  {props.provinceData.slice(6, 7) != [] && (
-                    <li><Link href={`/province/${props.provinceData[6].id}`}><a>{props.provinceData[6].slug}</a></Link></li>
+                  {provinceData.slice(6, 7) && (
+                    <li><Link href={`/province/${provinceData[6].id}`}><a>{provinceData[6].slug}</a></Link></li>
                   )}
                 </ul> 
               )} 
@@ -75,9 +101,9 @@ export default function Footer(props) {
             <div className="col-sm-6 col-lg-3 column3">
               <h4 className="menu-title">Contact Us:</h4>
               <ul className="menu-items">
-                <li><Link href="tel:"><a><ion-icon name="call-sharp"></ion-icon> 9823235685, 9841564258</a></Link></li>
-                <li><Link href="mailto:namunanews@gmail.com"><a><ion-icon name="mail-sharp"></ion-icon> namunanews@gmail.com</a></Link></li>
-                <li><Link href="#"><a><ion-icon name="location-sharp"></ion-icon> Namuna, Nuwakot</a></Link></li>
+                <li><a href="tel:"><ion-icon name="call-sharp"></ion-icon> 9823235685, 9841564258</a></li>
+                <li><a href="mailto:namunanews@gmail.com"><ion-icon name="mail-sharp"></ion-icon> namunanews@gmail.com</a></li>
+                <li><a href="/#"><ion-icon name="location-sharp"></ion-icon> Namuna, Nuwakot</a></li>
               </ul>
             </div>
           </div>
@@ -102,7 +128,7 @@ export default function Footer(props) {
           &copy; Copyright Namuna News {getTodaysDate().substring(0, 4)}. All rights reserved. Website designed by <a href="#">Softtech Multimedia</a>.
         </p>
         <p>
-          <Link href="/#"><a>Terms of Use</a></Link> &nbsp; | &nbsp; <Link href="/#"><a>Privacy Policy</a></Link>
+          <a href="#">Terms of Use</a> &nbsp; | &nbsp; <a href="#">Privacy Policy</a>
         </p>
       </section>
     </footer>

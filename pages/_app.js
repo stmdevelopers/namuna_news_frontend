@@ -7,6 +7,7 @@ import Header from "@/components/Header";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SocialIcons from "@/components/SocialIcons";
+import { useEffect, useState } from "react";
 
 // Dynamically import the TopProgressBar component
 const TopProgressBar = dynamic(
@@ -16,71 +17,99 @@ const TopProgressBar = dynamic(
   { ssr: false },
 );
 
+// Dynamically import the TopProgressBar component
+const GotoTopButton = dynamic(
+  () => {
+    return import("@/components/GotoTopButton");
+  },
+  { ssr: false },
+);
+
 function MyApp({ Component, pageProps }) {
+  // State declarations
+  const [categoriesData, setCategoriesData] = useState([]);
+
+  useEffect(() => {
+    const apiUrl = BASE_URL + "/api";
+
+    // Fetch provinces data using an API call
+    axios.get(`${apiUrl}/categories/all`)
+    .then(res => res.data)
+    .then(catData => {
+      catData = catData.data;
+      // Add only the active categories to our categories array
+      let categories = catData.filter(category => category.display_status == 1);
+      // Set categories data
+      setCategoriesData(categories);
+    })
+    .catch(err => console.log(err));
+  }, []);
+
   return (
     <React.Fragment>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
         <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossOrigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossOrigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossOrigin="anonymous"></script>
       </Head>
       
       <TopProgressBar />
-      <Header provinceData={pageProps.provinceData} />
-      <Navbar categoriesData={pageProps.categoriesData} />
+      <Header />
+      <Navbar categoriesData={categoriesData} />
       <Component {...pageProps} />
-      <Footer provinceData={pageProps.provinceData} categoriesData={pageProps.categoriesData} />
+      <Footer categoriesData={categoriesData} />
       <SocialIcons />
+      <GotoTopButton />
     </React.Fragment>
   )
 }
 
-MyApp.getInitialProps = async (appContext) => {
-  let pageProps = {};
+// MyApp.getInitialProps = async (appContext) => {
+//   let pageProps = {};
 
-  const apiUrl = BASE_URL + "/api";
+//   const apiUrl = BASE_URL + "/api";
 
-  // Fetch provinces data using an API call
-  let provincesData = null;
-  try {
-    const response = await axios.get(`${apiUrl}/province/all`);
-    provincesData = await response.data;
-  } catch (err) {
-    console.log(err);
-  }
+//   // Fetch provinces data using an API call
+//   let provincesData = null;
+//   try {
+//     const response = await axios.get(`${apiUrl}/province/all`);
+//     provincesData = await response.data;
+//   } catch (err) {
+//     console.log(err);
+//   }
 
-  let provinces = [];
-  // Grab only the provinces that are enabled
-  provinces = provincesData ? provincesData.data.filter(province => province.display_status == 1) : [];
-  // Reverse the province list to order them
-  provinces = provinces.reverse();
-  // Add provinces to our pageProps
-  pageProps.provinceData = provinces;
+//   let provinces = [];
+//   // Grab only the provinces that are enabled
+//   provinces = provincesData ? provincesData.data.filter(province => province.display_status == 1) : [];
+//   // Reverse the province list to order them
+//   provinces = provinces.reverse();
+//   // Add provinces to our pageProps
+//   pageProps.provinceData = provinces;
 
-  // Fetch categories data using an API call
-  let categoriesData = null;
-  try {
-    const response = await axios.get(`${apiUrl}/categories/all`);
-    categoriesData = await response.data;
-  } catch (err) {
-    console.log(err);
-  }
+//   // Fetch categories data using an API call
+//   let categoriesData = null;
+//   try {
+//     const response = await axios.get(`${apiUrl}/categories/all`);
+//     categoriesData = await response.data;
+//   } catch (err) {
+//     console.log(err);
+//   }
   
-  // Add categories data to our pageProps and add only the ones that are active
-  let categories = [];
-  categories = categoriesData ? categoriesData.data.filter(category => category.display_status == 1) : [];
-  pageProps.categoriesData = categories;
+//   // Add categories data to our pageProps and add only the ones that are active
+//   let categories = [];
+//   categories = categoriesData ? categoriesData.data.filter(category => category.display_status == 1) : [];
+//   pageProps.categoriesData = categories;
 
-  if (appContext.Component.getInitialProps) {
-    pageProps = await appContext.Component.getInitialProps(appContext.ctx);
-  };
+//   if (appContext.Component.getInitialProps) {
+//     pageProps = await appContext.Component.getInitialProps(appContext.ctx);
+//   };
 
-  return {
-    pageProps
-  };
-};
+//   return {
+//     pageProps
+//   };
+// };
 
 export default MyApp;

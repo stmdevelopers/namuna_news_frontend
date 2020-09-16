@@ -1,23 +1,26 @@
 import Link from "next/link";
 import { BASE_URL, bannerImages, getPublishedDate, getPublishedTime } from "./Helpers";
-import NewsSection from "./NewsSection";
+import SubCategorySection from "@/components/SubCategorySection";
 
 export default function SingleCategory(props) {
   const baseUrl = BASE_URL;
 
-  let featuredCategoryNews = [];
-  if (props.featuredCategoryNews) {
-    // Grab the first 5 news to show for the Popular News section
-    featuredCategoryNews = props.featuredCategoryNews.slice(0, 5);
-  }
+  // Get all the news for this category
+  let newsList = props.category.news[0];
+  // Filter the newsList to include only the active news items
+  newsList = newsList.filter(newsItem => newsItem.status == "active")
+  // Filter the newsList to include only the featured news items
+  const featuredNewsList = newsList.filter(newsItem => newsItem.news_label.toLowerCase() == "breaking" || newsItem.news_label.toLowerCase() == "featured");
+  // Set the featured category news by grabbing the first 5 news to show for the Popular News section
+  const featuredCategoryNews = featuredNewsList.slice(0, 5);
 
   return (
     <React.Fragment>
       <section className="single-category">
         <div className="banner-section">
-          <img className="img-fluid banner-image" src={bannerImages[props.title.toLowerCase()] == "" ? bannerImages["default"] : bannerImages[props.title.toLowerCase()]} />
+          <img className="img-fluid banner-image" src={bannerImages[props.category.slug.toLowerCase()] == "" ? bannerImages["default"] : bannerImages[props.category.slug.toLowerCase()]} />
           <div className="banner-image-overlay"></div>
-          <h1 className="banner-text">{props.title} News</h1>
+          <h1 className="banner-text">{props.category.slug} News</h1>
         </div>
         <div className="container">
 
@@ -133,9 +136,7 @@ export default function SingleCategory(props) {
             </div>
           </section>
 
-          {props.subCategoriesData && props.subCategoriesData.map(subCategory => (
-            <NewsSection key={subCategory.id} title={subCategory.slug} news={subCategory.news} />
-          ))}
+          <SubCategorySection category={props.category} />
           
         </div>
       </section>

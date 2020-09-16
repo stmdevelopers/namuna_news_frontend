@@ -1,5 +1,4 @@
 import Link from "next/link";
-import dateFormat from "dateformat";
 import { BASE_URL, bannerImages, getPublishedDate, getPublishedTime } from "./Helpers";
 import NewsSection from "./NewsSection";
 
