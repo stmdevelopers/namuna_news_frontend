@@ -1,8 +1,31 @@
 import Link from "next/link";
-import { getTodaysDate } from "./Helpers";
+import axios from "axios";
+import { BASE_URL, getTodaysDate } from "./Helpers";
+import { useEffect, useState } from "react";
 
 export default function Header(props) {
   const todaysDate = getTodaysDate("short", true);
+
+  // State declarations
+  const [provinceData, setProvinceData] = useState(null);
+  
+  useEffect(() => {
+    const apiUrl = BASE_URL + "/api";
+
+    // Fetch provinces data using an API call
+    axios.get(`${apiUrl}/province/all`)
+    .then(res => res.data)
+    .then(provincesData => {
+      provincesData = provincesData.data;
+      // Grab only the provinces that are enabled
+      let provinces = provincesData.filter(province => province.display_status == 1);
+      // Reverse the province list to order them
+      provinces = provinces.reverse();
+      // Set provinces data
+      setProvinceData(provinces);
+    })
+    .catch(err => console.log(err));
+  }, []);
 
   return (
     <header className="container header">
@@ -25,7 +48,7 @@ export default function Header(props) {
         <div className="pradesh-menu py-2">
           <ul>
             <li><Link href="/"><a>All</a></Link></li>
-            {props.provinceData && props.provinceData.map(province => (
+            {provinceData && provinceData.map(province => (
               <li key={province.id}><Link href={`/province/${province.id}`}><a>{province.slug}</a></Link></li>
             ))}
           </ul>

@@ -81,32 +81,54 @@ $link-hover-decoration: none;
 @import "./single-news.scss";
 @import "./single-category.scss";
 
+html {
+  scroll-behavior: smooth;
+}
+
 // Social Icons
 .social-icons-section {
   position: fixed;
   top: 16rem;
   right: 10px;
   display: flex;
+  align-items: center;
   z-index: 9999;
+  transform: translateX(62%);
+  transition: all 0.4s ease-in-out;
 
-  .social-icons {
-    transform: translateX(80%);
+  &:hover, &:active {
+    transform: translateX(0);
+  }
+
+  a {
+    background-color: $secondary;
+    display: inline-block;
+    font-size: 1.5rem;
+    padding: 0 0.6rem;
+    color: $primary;
     transition: all 0.3s ease;
+    vertical-align: middle;
 
-    a {
-      display: inline-block;
-      font-size: 2rem;
-      padding: 0 0.5rem;
-      color: $primary;
-      transition: all 0.5s ease;
-      vertical-align: middle;
-
-      ion-icon {
-        margin-top: 0.4rem;
-      }
+    ion-icon {
+      margin-top: 0.55rem;
     }
     &:hover, &:active {
-      transform: translateX(0);
+      background-color: $primary;
+      color: $white;
+    }
+  }
+  &:hover, &:active {
+    transform: translateX(0);
+  }
+  &:hover > div:first-child a, &:active > div:first-child a {
+    transform: translateX(100%); 
+  }
+
+  .social-icons {
+    z-index: 1;
+
+    a {
+      display: block;
     }
   }
   @include media-breakpoint-up(lg) {
@@ -114,7 +136,7 @@ $link-hover-decoration: none;
   }
 }
 // Goto Top Button
-#goto-top {
+#btn-goto-top {
   position: fixed;
   right: 1.5rem;
   bottom: 1.5rem;
@@ -125,9 +147,15 @@ $link-hover-decoration: none;
   padding: 0.25rem 0.75rem 0.25rem 0.75rem;
   box-shadow: none;
   transition: all 0.3s ease;
+  z-index: 99;
+  transform: translateX(200%);
+  display: none;
 
   ion-icon {
     padding-top: 0.35rem;
+  }
+  &.open {
+    transform: translateX(0);
   }
 }
 
