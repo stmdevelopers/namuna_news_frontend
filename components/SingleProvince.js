@@ -33,7 +33,7 @@ export default function SingleProvince(props) {
                     </div>
                     <Link href={`/news/${featuredProvinceNews[0].id}`}>
                       <a className="news-title">
-                        {featuredProvinceNews[0].news_translations[0][0].title}
+                        {featuredProvinceNews[0].news_translations[0].title}
                       </a>
                     </Link>
                     <p className="news-meta">
@@ -55,7 +55,7 @@ export default function SingleProvince(props) {
                       </div>
                       <Link href={`/news/${featuredProvinceNews[1].id}`}>
                         <a className="news-title">
-                          {featuredProvinceNews[1].news_translations[0][0].title}
+                          {featuredProvinceNews[1].news_translations[0].title}
                         </a>
                       </Link>
                       <p className="news-meta">
@@ -75,7 +75,7 @@ export default function SingleProvince(props) {
                         </div>
                         <Link href={`/news/${featuredProvinceNews[2].id}`}>
                           <a className="news-title">
-                            {featuredProvinceNews[2].news_translations[0][0].title}
+                            {featuredProvinceNews[2].news_translations[0].title}
                           </a>
                         </Link>
                         <p className="news-meta">
@@ -97,7 +97,7 @@ export default function SingleProvince(props) {
                         </div>
                         <Link href={`/news/${featuredProvinceNews[3].id}`}>
                           <a className="news-title">
-                            {featuredProvinceNews[3].news_translations[0][0].title}
+                            {featuredProvinceNews[3].news_translations[0].title}
                           </a>
                         </Link>
                         <p className="news-meta">
@@ -117,7 +117,7 @@ export default function SingleProvince(props) {
                         </div>
                         <Link href={`/news/${featuredProvinceNews[4].id}`}>
                           <a className="news-title">
-                            {featuredProvinceNews[4].news_translations[0][0].title}
+                            {featuredProvinceNews[4].news_translations[0].title}
                           </a>
                         </Link>
                         <p className="news-meta">

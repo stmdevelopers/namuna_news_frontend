@@ -24,7 +24,7 @@ export default function NewsSection(props) {
                   </div>
                   <Link href={`/news/${newsItem.id}`}>
                     <a className="news-title">
-                      {newsItem.news_translations[0][0].title}
+                      {newsItem.news_translations[0].title}
                     </a>
                   </Link>
                   <p className="news-meta">

@@ -88,12 +88,12 @@ html {
 // Social Icons
 .social-icons-section {
   position: fixed;
-  top: 16rem;
-  right: 10px;
+  top: 18rem;
+  right: 0;
   display: flex;
   align-items: center;
   z-index: 9999;
-  transform: translateX(62%);
+  transform: translateX(51%);
   transition: all 0.4s ease-in-out;
 
   &:hover, &:active {
@@ -131,6 +131,12 @@ html {
       display: block;
     }
   }
+  @media screen and (min-width: 388px) {
+    top: 15rem;
+  }
+  @include media-breakpoint-up(sm) {
+    top: 12rem;
+  }
   @include media-breakpoint-up(lg) {
     top: 10rem;
   }
@@ -149,7 +155,6 @@ html {
   transition: all 0.3s ease;
   z-index: 99;
   transform: translateX(200%);
-  display: none;
 
   ion-icon {
     padding-top: 0.35rem;

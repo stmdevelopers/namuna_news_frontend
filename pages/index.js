@@ -29,15 +29,15 @@ export default function Home(props) {
     .then(res => res.data)
     .then(newsData => {
       // Get breaking news and grab the first 3 news items
-      let breakingNews = newsData.data.filter(newsItem => newsItem.news_label.toLowerCase() == "breaking");
+      let breakingNews = newsData.data.filter(newsItem => newsItem.news_label.toLowerCase() == "breaking" && newsItem.status == "active");
       breakingNews = breakingNews.slice(0, 3);
       setBreakingNews(breakingNews);
       // Get today's news and grab the first 4 news items
-      let todaysNews = newsData.data.filter(newsItem => /*newsItem.created_at.substring(0, 10) == todaysDate &&*/ newsItem.news_label.toLowerCase() == "featured");
+      let todaysNews = newsData.data.filter(newsItem => /*newsItem.created_at.substring(0, 10) == todaysDate &&*/ newsItem.news_label.toLowerCase() == "featured" && newsItem.status == "active");
       todaysNews = todaysNews.slice(0, 4);
       setTodaysNews(todaysNews);
       // Get featured news and grab the first 4 items
-      let featuredNews = newsData.data.filter(newsItem => newsItem.news_label.toLowerCase() == "featured");
+      let featuredNews = newsData.data.filter(newsItem => newsItem.news_label.toLowerCase() == "featured" && newsItem.status == "active");
       featuredNews = featuredNews.slice(0, 4);
       setFeaturedNews(featuredNews);
     })
@@ -112,93 +112,3 @@ export default function Home(props) {
     </React.Fragment>
   );
 }
-
-// export async function getServerSideProps(context) {
-//   const apiUrl = BASE_URL + "/api";
-
-//   // Fetch news data through API
-//   let newsData = null;
-//   let breakingNews = null;
-//   let todaysNews = null;
-//   let featuredNews = null;
-//   try {
-//     const response = await axios.get(`${apiUrl}/news/all`);
-//     newsData = await response.data;
-//   } catch (err) {
-//     console.log(err);
-//   }
-
-//   // Get breaking news and grab the first 3 news items
-//   breakingNews = newsData.data.filter(newsItem => newsItem.news_label.toLowerCase() == "breaking");
-//   breakingNews = breakingNews.slice(0, 3);
-//   // Get today's news and grab the first 4 news items
-//   todaysNews = newsData.data.filter(newsItem => /*newsItem.created_at.substring(0, 10) == todaysDate &&*/ newsItem.news_label.toLowerCase() == "featured");
-//   todaysNews = todaysNews.slice(0, 4);
-//   // Get featured news and grab the first 4 items
-//   featuredNews = newsData.data.filter(newsItem => newsItem.news_label.toLowerCase() == "featured");
-//   featuredNews = featuredNews.slice(0, 4);
-
-//   // Fetch resources data through API
-//   let resourcesData = null;
-//   let videoResources = null;
-//   try {
-//     const response = await axios.get(`${apiUrl}/resources/all`);
-//     resourcesData = await response.data;
-//   } catch (err) {
-//     console.log(err);
-//   }
-//   // Get video resources and grab the first 2 items
-//   videoResources = resourcesData.data.filter(item => item.type == "video");
-//   videoResources = videoResources.slice(0, 2);
-
-//   // Fetch categories data using an API call
-//   let categoriesData = null;
-//   try {
-//     const response = await axios.get(`${apiUrl}/categories/all`);
-//     categoriesData = await response.data;
-//   } catch (err) {
-//     console.log(err);
-//   }
-
-//   // Initialise category news lists
-//   let nepalNews = [];
-//   let sportsNews = [];
-//   let technologyNews = [];
-//   let educationNews = [];
-//   let worklifeNews = [];
-//   // Populate each category news list with the corresponding news from the categories data
-//   for (let i=0; i<categoriesData.data.length; i++) {
-//     let category = categoriesData.data[i];
-
-//     if (category.slug.toLowerCase() == "nepal") {
-//       nepalNews = category.news[0];
-//     }
-//     if (category.slug.toLowerCase() == "sports") {
-//       sportsNews = category.news[0];
-//     }
-//     if (category.slug.toLowerCase() == "technology") {
-//       technologyNews = category.news[0];
-//     }
-//     if (category.slug.toLowerCase() == "education") {
-//       educationNews = category.news[0];
-//     }
-//     if (category.slug.toLowerCase() == "worklife") {
-//       worklifeNews = category.news[0];
-//     }
-//   }
-
-//   return {
-//     props: {
-//       newsData: newsData,
-//       breakingNews: breakingNews,
-//       todaysNews: todaysNews,
-//       nepalNews: nepalNews,
-//       sportsNews: sportsNews,
-//       technologyNews: technologyNews,
-//       educationNews: educationNews,
-//       worklifeNews: worklifeNews,
-//       featuredNews: featuredNews,
-//       videoResources: videoResources
-//     }
-//   }
-// }

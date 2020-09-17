@@ -36,7 +36,7 @@ export default function SingleCategory(props) {
                     </div>
                     <Link href={`/news/${featuredCategoryNews[0].id}`}>
                       <a className="news-title">
-                        {featuredCategoryNews[0].news_translations[0][0].title}
+                        {featuredCategoryNews[0].news_translations[0].title}
                       </a>
                     </Link>
                     <p className="news-meta">
@@ -58,7 +58,7 @@ export default function SingleCategory(props) {
                       </div>
                       <Link href={`/news/${featuredCategoryNews[1].id}`}>
                         <a className="news-title">
-                          {featuredCategoryNews[1].news_translations[0][0].title}
+                          {featuredCategoryNews[1].news_translations[0].title}
                         </a>
                       </Link>
                       <p className="news-meta">
@@ -78,7 +78,7 @@ export default function SingleCategory(props) {
                         </div>
                         <Link href={`/news/${featuredCategoryNews[2].id}`}>
                           <a className="news-title">
-                            {featuredCategoryNews[2].news_translations[0][0].title}
+                            {featuredCategoryNews[2].news_translations[0].title}
                           </a>
                         </Link>
                         <p className="news-meta">
@@ -100,7 +100,7 @@ export default function SingleCategory(props) {
                         </div>
                         <Link href={`/news/${featuredCategoryNews[3].id}`}>
                           <a className="news-title">
-                            {featuredCategoryNews[3].news_translations[0][0].title}
+                            {featuredCategoryNews[3].news_translations[0].title}
                           </a>
                         </Link>
                         <p className="news-meta">
@@ -120,7 +120,7 @@ export default function SingleCategory(props) {
                         </div>
                         <Link href={`/news/${featuredCategoryNews[4].id}`}>
                           <a className="news-title">
-                            {featuredCategoryNews[4].news_translations[0][0].title}
+                            {featuredCategoryNews[4].news_translations[0].title}
                           </a>
                         </Link>
                         <p className="news-meta">

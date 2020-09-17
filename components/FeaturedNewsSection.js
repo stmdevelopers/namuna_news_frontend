@@ -8,7 +8,7 @@ export default function FeaturedNewsSection(props) {
   // Grab the first 4 news to show for Nepal News section
   const nepalNews = props.nepalNews ? props.nepalNews.filter(newsItem => newsItem.news_label != "featured").slice(0, 4) : [];
   const featuredNepalNews = props.nepalNews ? props.nepalNews.filter(newsItem => newsItem.news_label == "featured").slice(0, 3) : [];
-  const nepal_category_id = nepalNews[0] ? nepalNews[0].category.id : 0;
+  const nepal_category_id = nepalNews[0] ? nepalNews[0].category.id : "#";
   const breakingNews = props.breakingNews ? props.breakingNews : [];
 
   return (
@@ -29,7 +29,7 @@ export default function FeaturedNewsSection(props) {
                       </div>
                       <Link href={`/news/${breakingNews[0].id}`}>
                         <a className="news-title">
-                          {breakingNews[0].news_translations[0][0].title}
+                          {breakingNews[0].news_translations[0].title}
                         </a>
                       </Link>
                       <p className="news-meta">
@@ -50,7 +50,7 @@ export default function FeaturedNewsSection(props) {
                         </div>
                         <Link href={`/news/${breakingNews[1].id}`}>
                           <a className="news-title">
-                            {breakingNews[1].news_translations[0][0].title}
+                            {breakingNews[1].news_translations[0].title}
                           </a>
                         </Link>
                         <p className="news-meta">
@@ -70,7 +70,7 @@ export default function FeaturedNewsSection(props) {
                         </div>
                         <Link href={`/news/${breakingNews[2].id}`}>
                           <a className="news-title">
-                            {breakingNews[2].news_translations[0][0].title}
+                            {breakingNews[2].news_translations[0].title}
                           </a>
                         </Link>
                         <p className="news-meta">
@@ -113,7 +113,7 @@ export default function FeaturedNewsSection(props) {
                         <div className="d-flex flex-column justify-content-between">
                           <Link href={`/news/${newsItem.id}`}>
                             <a className="news-title mt-0">
-                              {newsItem.news_translations[0][0].title}
+                              {newsItem.news_translations[0].title}
                             </a>
                           </Link>
                           <p className="news-meta">
@@ -175,7 +175,7 @@ export default function FeaturedNewsSection(props) {
                     </div>
                     <Link href={`/news/${newsItem.id}`}>
                       <a className="news-title">
-                        {newsItem.news_translations[0][0].title}
+                        {newsItem.news_translations[0].title}
                       </a>
                     </Link>
                     <p className="news-meta">
@@ -187,7 +187,7 @@ export default function FeaturedNewsSection(props) {
                 ))}
               </div>
               <div className="col-sm-6 col-lg-3 order-3 order-lg-3">
-                {nepalNews && nepalNews.slice(0, 2).map(newsItem => (
+                {nepalNews && nepalNews.slice(2, 4).map(newsItem => (
                   <article className="news-item" key={newsItem.id}>
                     <div className="news-img-area">
                       <img className="img-fluid" src={`${baseUrl}${newsItem.featured_image}`} />
@@ -195,7 +195,7 @@ export default function FeaturedNewsSection(props) {
                     </div>
                     <Link href={`/news/${newsItem.id}`}>
                       <a className="news-title">
-                        {newsItem.news_translations[0][0].title}
+                        {newsItem.news_translations[0].title}
                       </a>
                     </Link>
                     <p className="news-meta">
