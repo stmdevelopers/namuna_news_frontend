@@ -83,16 +83,16 @@ export default function Footer(props) {
               <h4 className="menu-title">Quick Links:</h4>
               {provinceData && (
                 <ul className="menu-items">
-                  {provinceData.slice(0, 2) && (
+                  {provinceData.slice(0, 2) != [] && (
                     <li><Link href={`/province/${provinceData[0].id}`}><a>{provinceData[0].slug}</a></Link> | <Link href={`/province/${provinceData[1].id}`}><a>{provinceData[1].slug}</a></Link></li>
                   )}
-                  {provinceData.slice(2, 4) && (
+                  {provinceData.slice(2, 4) != [] && (
                     <li><Link href={`/province/${provinceData[2].id}`}><a>{provinceData[2].slug}</a></Link> | <Link href={`/province/${provinceData[3].id}`}><a>{provinceData[3].slug}</a></Link></li>
                   )}
-                  {provinceData.slice(4, 6) && (
+                  {provinceData.slice(4, 6) != [] && (
                     <li><Link href={`/province/${provinceData[4].id}`}><a>{provinceData[4].slug}</a></Link> | <Link href={`/province/${provinceData[5].id}`}><a>{provinceData[5].slug}</a></Link></li>
                   )}
-                  {provinceData.slice(6, 7) && (
+                  {provinceData.slice(6, 7) != [] && (
                     <li><Link href={`/province/${provinceData[6].id}`}><a>{provinceData[6].slug}</a></Link></li>
                   )}
                 </ul> 

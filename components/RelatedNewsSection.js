@@ -17,7 +17,7 @@ export default function RelatedNewsSection(props) {
   // Handle errors and loading states
   if (error) {
     return (
-      <h4 className="text-center mx-1 my-5">Error fetching data. Please try again.</h4>
+      <h4 className="text-center mx-1 my-5">Something went wrong! Please try again.</h4>
     )
   }
   if (!data) {
@@ -47,7 +47,7 @@ export default function RelatedNewsSection(props) {
               </div>
               <Link href={`/news/${newsItem.id}`}>
                 <a className="news-title">
-                  {newsItem.news_translations[0][0].title}
+                  {newsItem.news_translations[0].title}
                 </a>
               </Link>
               <p className="news-meta">

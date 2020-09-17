@@ -36,7 +36,7 @@ export default function SubCategorySection(props) {
   // Handle errors and loading states
   if (error) {
     return (
-      <h4 className="text-center mx-1 my-5">Error fetching data. Please try again.</h4>
+      <h4 className="text-center mx-1 my-5">Something went wrong! Please try again.</h4>
     )
   }
   if (!data) {

@@ -135,6 +135,7 @@
   .plus-icon {
     color: $danger;
     font-size: 2rem;
+    z-index: 1;
 
     ion-icon {
       --ionicon-stroke-width: 3.5rem;
@@ -184,10 +185,11 @@
   }
   @include media-breakpoint-down(xs) {
     .promote-text {
-      font-size: 0.75rem;
+      font-size: 0.65rem;
+      padding: 1rem 2rem;
     }
     .linebar {
-      height: 3.15rem;
+      height: 3rem;
     }
   }
 }

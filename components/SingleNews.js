@@ -20,17 +20,17 @@ export default function SingleNews(props) {
           )}
         </div>
 
-        <h1 className="news-title">{props.newsItem ? props.newsItem.news_translations[0][0].title : ""}</h1>
+        <h1 className="news-title">{props.newsItem ? props.newsItem.news_translations[0].title : ""}</h1>
         
         <section className="news-meta-section d-flex justify-content-between">
           <p className="news-meta">
             <span className="news-meta-item">
               <ion-icon name="time-outline"></ion-icon>
-              <span>{props.newsItem ? getPublishedTime(props.newsItem.news_translations[0][0].created_at) : ""}</span>
+              <span>{props.newsItem ? getPublishedTime(props.newsItem.news_translations[0].created_at) : ""}</span>
             </span>
             <span className="news-meta-item">
               <ion-icon name="calendar-outline"></ion-icon> 
-              <span>{props.newsItem ? getPublishedDate(props.newsItem.news_translations[0][0].created_at) : ""}</span>
+              <span>{props.newsItem ? getPublishedDate(props.newsItem.news_translations[0].created_at) : ""}</span>
             </span>
           </p>
           <p className="news-meta-author">
@@ -42,7 +42,7 @@ export default function SingleNews(props) {
           <img className="img-fluid" src={props.newsItem ? `${baseUrl}${props.newsItem.featured_image}` : ""} />
         </div>
 
-        <div className="news-content" dangerouslySetInnerHTML={{__html: props.newsItem ? props.newsItem.news_translations[0][0].content : "" }}>
+        <div className="news-content" dangerouslySetInnerHTML={{__html: props.newsItem ? props.newsItem.news_translations[0].content : "" }}>
           {/* News Content Goes Here... */}
         </div>
 
@@ -50,8 +50,8 @@ export default function SingleNews(props) {
           <h5 className="news-share-title">Share:</h5>
           <div className="news-share-icons">
             <a target="_blank" href={`https://www.facebook.com/sharer.php?u=namunasnews.com/news/${props.newsItem ? props.newsItem.id : ""}`}><ion-icon name="logo-facebook"></ion-icon></a>
-            <a target="_blank" href={`https://twitter.com/share?text=${props.newsItem ? props.newsItem.news_translations[0][0].title : ""}&url=namunasnews.com/news/${props.newsItem ? props.newsItem.id : ""}&via=namunasnews.com`}><ion-icon name="logo-twitter"></ion-icon></a>
-            <a target="_blank" href={`https://www.linkedin.com/shareArticle?mini=true&url=namunasnews.com/news/${props.newsItem ? props.newsItem.id : ""}&title=${props.newsItem ? props.newsItem.news_translations[0][0].title : ""}`}><ion-icon name="logo-linkedin"></ion-icon></a>
+            <a target="_blank" href={`https://twitter.com/share?text=${props.newsItem ? props.newsItem.news_translations[0].title : ""}&url=namunasnews.com/news/${props.newsItem ? props.newsItem.id : ""}&via=namunasnews.com`}><ion-icon name="logo-twitter"></ion-icon></a>
+            <a target="_blank" href={`https://www.linkedin.com/shareArticle?mini=true&url=namunasnews.com/news/${props.newsItem ? props.newsItem.id : ""}&title=${props.newsItem ? props.newsItem.news_translations[0].title : ""}`}><ion-icon name="logo-linkedin"></ion-icon></a>
           </div>
         </div>
       </section>

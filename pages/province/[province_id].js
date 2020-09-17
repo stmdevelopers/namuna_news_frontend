@@ -42,7 +42,7 @@ export default function ProvincePage(props) {
   // Handle errors and loading states
   if (error) {
     return (
-      <h4 className="text-center mx-1 my-5">Error fetching data. Please try again.</h4>
+      <h4 className="text-center mx-1 my-5">Something went wrong! Please try again.</h4>
     )
   }
   if (!data) {
@@ -73,64 +73,3 @@ export async function getServerSideProps(context) {
     }
   }
 }
-
-// export async function getStaticPaths() {
-//   const apiUrl = BASE_URL + "/api";
-
-//   // Fetch the list of all the provinces id through the API to pre-render province pages
-//   let provinceData = null;
-//   try {
-//     const response = await axios.get(`${apiUrl}/province/all`);
-//     provinceData = await response.data;
-//   } catch (err) {
-//     console.log(err);
-//   }
-
-//   // Filter only the active provinces
-//   provinceData = provinceData.data.filter(province => province.display_status == 1);
-//   // Create a list of all the province pages paths
-//   const provincePaths = provinceData.map(province => ({
-//     params: { province_id: province.id.toString() },
-//   }));
-
-//   return {
-//     paths: provincePaths,
-//     fallback: true
-//   }
-// }
-
-// export async function getServerSideProps(context) {
-//   const apiUrl = BASE_URL + "/api";
-
-//   // Fetch the list of news for all the available province pages through the API
-//   let provinceData = null;
-//   try {
-//     const response = await axios.get(`${apiUrl}/province/${context.params.province_id}`);
-//     provinceData = await response.data;
-//   } catch (err) {
-//     console.log(err);
-//   }
-
-//   // Get the list of all the news for this province
-//   let newsList = provinceData.data.news[0];
-//   // Filter only the news that are active
-//   newsList = newsList.filter(newsItem => newsItem.status == "active");
-
-//   // Initialise province news list
-//   let featuredProvinceNews = [];
-//   // Populate each province news list with the corresponding news data from the news list by fetching them from the API
-//   for (let i=0; i<newsList.length; i++) {
-//     const newsData = await fetch(`${apiUrl}/news/${newsList[i].id}`).then(res => res.json());
-//     if (newsData.data.news_label.toLowerCase() == "breaking" || newsData.data.news_label.toLowerCase() == "featured") {
-//       featuredProvinceNews.push(newsData.data);
-//     }
-//   }
-  
-//   return {
-//     props: {
-//       provincePageData: provinceData.data,
-//       featuredProvinceNews: featuredProvinceNews
-//     },
-//     // revalidate: 1
-//   }
-// }
