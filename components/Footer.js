@@ -76,6 +76,8 @@ export default function Footer(props) {
               </p>
               <div className="footer-social-icons">
                 <a href="#"><ion-icon name="logo-facebook"></ion-icon></a>
+                <a href="#"><ion-icon name="logo-twitter"></ion-icon></a>
+                <a href="#"><ion-icon name="logo-linkedin"></ion-icon></a>
                 <a href="#"><ion-icon name="logo-youtube"></ion-icon></a>
               </div>
             </div>
