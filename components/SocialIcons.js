@@ -10,6 +10,7 @@ export default function SocialIcons() {
         <a href="#"><ion-icon name="logo-facebook"></ion-icon></a>
         <a href="#"><ion-icon name="logo-twitter"></ion-icon></a>
         <a href="#"><ion-icon name="logo-linkedin"></ion-icon></a>
+        <a href="#"><ion-icon name="logo-youtube"></ion-icon></a>
       </div>
     </section>
   );

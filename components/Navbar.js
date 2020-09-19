@@ -40,12 +40,10 @@ export default function Navbar(props) {
               {mainCategories.map(category => <li key={category.id}><Link href={`/category/${category.id}`}><a>{category.slug}</a></Link></li>)}
               <li><Link href="#"><a className="btn-more" data-toggle="collapse" href="#moreItems" role="button" aria-expanded="false" aria-controls="moreItems" onClick={() => moreBtnState == "down" ? setMoreBtnState("up") : setMoreBtnState("down")}>More <ion-icon name={`caret-${moreBtnState}-sharp`}></ion-icon></a></Link></li>
             </ul>
-            <div className="search-box input-group">
-              <input type="text" name="search" className="form-control-sm" placeholder="Search" aria-label="search" aria-describedby="btn-search" />
-              <div className="input-group-append">
-                <Link href="#"><a id="btn-search" className="btn-search"><ion-icon name="search-sharp"></ion-icon></a></Link>
-              </div>
-            </div>
+            <form className="search-box">
+              <input type="text" name="search" className="search-input" placeholder="Search" aria-label="search" aria-describedby="btn-search" />
+              <a href="#" id="btn-search" className="btn-search"><ion-icon name="search-sharp"></ion-icon></a>
+            </form>
           </div>
 
           <div className="collapse" id="moreItems">
@@ -64,11 +62,11 @@ export default function Navbar(props) {
               <img className="img-fluid" src="/namuna-news-logo-english-white.png" />
             </div>
 
-            <div className="search-box-responsive input-group">
-              <input type="text" name="search" className="form-control-sm" placeholder="Search" aria-label="search" aria-describedby="btn-search" />
-              <div className="input-group-append">
-                <Link href="#"><a id="btn-search" className="btn-search"><ion-icon name="search-sharp"></ion-icon></a></Link>
-              </div>
+            <div className="search-box-responsive-area">
+              <form className="search-box-responsive">
+                <input type="text" name="search" className="search-input" placeholder="Search" aria-label="search" aria-describedby="btn-search" />
+                <a href="#" id="btn-search" className="btn-search"><ion-icon name="search-sharp"></ion-icon></a>
+              </form>
             </div>
             
             <li onClick={() => setResponsiveNavState("hide")}><Link href="/"><a>Home</a></Link></li>
@@ -87,12 +85,10 @@ export default function Navbar(props) {
             <button id="btn-responsive-menu" className="btn btn-primary" onClick={() => responsiveNavState == "hide" ? setResponsiveNavState("show") : setResponsiveNavState("hide")}><ion-icon name={`${responsiveNavState == "hide" ? "menu" : "close"}-sharp`}></ion-icon></button>
           </div>
 
-          <div className="search-box input-group">
-            <input type="text" name="search" className="form-control-sm" placeholder="Search" aria-label="search" aria-describedby="btn-search" />
-            <div className="input-group-append">
-              <Link href="#"><a id="btn-search" className="btn-search"><ion-icon name="search-sharp"></ion-icon></a></Link>
-            </div>
-          </div>
+          <form className="search-box">
+            <input type="text" name="search" className="search-input" placeholder="Search" aria-label="search" aria-describedby="btn-search" />
+            <a href="#" id="btn-search" className="btn-search"><ion-icon name="search-sharp"></ion-icon></a>
+          </form>
         </nav>
       </div>
     </section>

@@ -7,7 +7,6 @@
     display: flex;
     flex-wrap: wrap;
     position: relative;
-    // display: none;
     margin: 0;
   }
 
@@ -24,7 +23,6 @@
       width: 99%;
       height: 4px;
       background-color: $danger;
-      //transform: scaleX(0);
       transform: translateX(-100%);
       transition: transform .4s ease;
     }
@@ -32,19 +30,19 @@
       background-color: $info;
     }
     &:nth-child(2)::after {
-      background-color: $danger;
+      background-color: #FF8307;
     }
     &:nth-child(3)::after {
-      background-color: $secondary;
+      background-color: #9b59b6;
     }
     &:nth-child(4)::after {
-      background-color: $info;
+      background-color: turquoise;
     }
     &:nth-child(5)::after {
       background-color: $warning;
     }
     &:nth-child(6)::after {
-      background-color: #9b59b6;
+      background-color: magenta;
     }
     &:nth-child(7)::after {
       background-color: $success;
@@ -57,7 +55,6 @@
     }
 
     &:hover::after, &:active::after {
-      //transform: scaleX(1);
       transform: translateX(0);
     }
   }
@@ -106,34 +103,35 @@
   }
 
   .search-box, .search-box-responsive {
-    width: auto;
-    margin-top: 0.5rem;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
 
-    input {
+    .search-input {
       font-size: 0.75rem;
-      padding: 0.5rem 0.5rem;
+      padding: 0.5rem 0 0.5rem 0.5rem;
       width: 10rem;
+      height: 1.75rem;
       border: none;
       border-radius: 0;
+      box-shadow: none;
 
       &:focus {
         outline: none;
       }
     }
-    .input-group-append {
-      display: inline-block;
-      margin-top: 3px;
-    }
     .btn-search {
       background-color: $white;
       color: $primary;
-      padding: 0.095rem 0.25rem 0.09rem 0.25rem;
       border: 1px solid $white;
+      padding: 0 0.25rem 0 0.35rem;
+      height: 1.75rem;
+      margin-left: -1px;
 
       ion-icon {
         vertical-align: middle;
         font-size: 1.25rem;
-        padding-bottom: 0.15rem;;
       }
     }
   }
@@ -238,21 +236,8 @@
           margin-top: 0.4rem;
         }
       }
-      .search-box {
-        margin-left: 0;
-      }
       .search-box-responsive {
         display: none;
-      }
-    }
-  }
-
-  @media screen and (max-width: 768px) {
-    .nav-items-responsive {
-      .search-box {
-        .input-group-append {
-          margin-top: 3px;
-        }
       }
     }
   }
@@ -262,26 +247,15 @@
       .search-box {
         display: none;
       }
+      .search-box-responsive-area {
+        border-bottom: 1px solid rgba($color: $white, $alpha: 0.25);
+      }
       .search-box-responsive {
-        display: block;
-        width: auto;
-        margin-top: 0.35rem;
-        margin: 0;
-        padding-left: 1.5rem;
-        border-bottom: 1px solid $white;
+        display: flex;
+        margin: 0 auto;
 
-        input {
+        .search-input {
           width: 12rem;
-          margin-left: 0.5rem;
-        }
-        .input-group-append {
-          display: inline-block;
-          margin-top: 0;
-          margin-left: -2px;
-
-          .btn-search {
-            padding: 0.1rem 0.3rem 0.25rem 0.3rem;
-          }
         }
       }
     }

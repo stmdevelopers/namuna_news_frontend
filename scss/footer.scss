@@ -78,15 +78,22 @@
         max-width: 10rem;
       }
       .footer-social-icons a {
-        color: #bbb;
-        font-size: 1.75rem;
+        display: inline-block;
+        background-color: darken($white, 15%);
+        color: $primary;
+        font-size: 1.5rem;
+        padding: 0.35rem 0.6rem 0rem 0.6rem;
+        border: 1px solid $white;
+        transition: all 0.3s ease;
 
         &:hover, &:active {
+          background-color: $primary;
           color: $white;
+          border-color: darken($white, 15%);
         }
       }
       .footer-social-icons a:not(:first-child) {
-        margin-left: 1rem;
+        margin-left: 0.75rem;
       }
     }
 
