@@ -28,6 +28,11 @@ export default function Navbar(props) {
   // Use state for toggling responsive navigation and more button
   const [responsiveNavState, setResponsiveNavState] = useState("hide");
   const [moreBtnState, setMoreBtnState] = useState("down");
+  const [searchText, setSearchText] = useState("");
+
+  function searchInputChangeHandler(e) {
+    setSearchText(e.target.value);
+  }
 
   return (
     <section className="main-nav">
@@ -40,9 +45,9 @@ export default function Navbar(props) {
               {mainCategories.map(category => <li key={category.id}><Link href={`/category/${category.id}`}><a>{category.slug}</a></Link></li>)}
               <li><Link href="#"><a className="btn-more" data-toggle="collapse" href="#moreItems" role="button" aria-expanded="false" aria-controls="moreItems" onClick={() => moreBtnState == "down" ? setMoreBtnState("up") : setMoreBtnState("down")}>More <ion-icon name={`caret-${moreBtnState}-sharp`}></ion-icon></a></Link></li>
             </ul>
-            <form className="search-box">
-              <input type="text" name="search" className="search-input" placeholder="Search" aria-label="search" aria-describedby="btn-search" />
-              <a href="#" id="btn-search" className="btn-search"><ion-icon name="search-sharp"></ion-icon></a>
+            <form className="search-box" method="POST" action={ `/search/${searchText}` }>
+              <input type="text" name="search" value={ searchText } onChange={searchInputChangeHandler} required className="search-input" placeholder="Search" aria-label="search" aria-describedby="btn-search" />
+              <button type="submit" id="btn-search" className="btn-search"><ion-icon name="search-sharp"></ion-icon></button>
             </form>
           </div>
 
@@ -63,9 +68,9 @@ export default function Navbar(props) {
             </div>
 
             <div className="search-box-responsive-area">
-              <form className="search-box-responsive">
-                <input type="text" name="search" className="search-input" placeholder="Search" aria-label="search" aria-describedby="btn-search" />
-                <a href="#" id="btn-search" className="btn-search"><ion-icon name="search-sharp"></ion-icon></a>
+              <form className="search-box-responsive" method="POST" action={ `/search/${searchText}` }>
+                <input type="text" name="search" value={ searchText } onChange={searchInputChangeHandler} required className="search-input" placeholder="Search" aria-label="search" aria-describedby="btn-search" />
+                <button type="submit" id="btn-search" className="btn-search"><ion-icon name="search-sharp"></ion-icon></button>
               </form>
             </div>
             
@@ -85,9 +90,9 @@ export default function Navbar(props) {
             <button id="btn-responsive-menu" className="btn btn-primary" onClick={() => responsiveNavState == "hide" ? setResponsiveNavState("show") : setResponsiveNavState("hide")}><ion-icon name={`${responsiveNavState == "hide" ? "menu" : "close"}-sharp`}></ion-icon></button>
           </div>
 
-          <form className="search-box">
-            <input type="text" name="search" className="search-input" placeholder="Search" aria-label="search" aria-describedby="btn-search" />
-            <a href="#" id="btn-search" className="btn-search"><ion-icon name="search-sharp"></ion-icon></a>
+          <form className="search-box" method="POST" action={ `/search/${searchText}` }>
+            <input type="text" name="search" value={ searchText } onChange={searchInputChangeHandler} required className="search-input" placeholder="Search" aria-label="search" aria-describedby="btn-search" />
+            <button type="submit" id="btn-search" className="btn-search"><ion-icon name="search-sharp"></ion-icon></button>
           </form>
         </nav>
       </div>
