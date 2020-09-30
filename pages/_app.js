@@ -17,7 +17,7 @@ const TopProgressBar = dynamic(
   { ssr: false },
 );
 
-// Dynamically import the TopProgressBar component
+// Dynamically import the GotoTopButton component
 const GotoTopButton = dynamic(
   () => {
     return import("@/components/GotoTopButton");
@@ -66,50 +66,5 @@ function MyApp({ Component, pageProps }) {
     </React.Fragment>
   )
 }
-
-// MyApp.getInitialProps = async (appContext) => {
-//   let pageProps = {};
-
-//   const apiUrl = BASE_URL + "/api";
-
-//   // Fetch provinces data using an API call
-//   let provincesData = null;
-//   try {
-//     const response = await axios.get(`${apiUrl}/province/all`);
-//     provincesData = await response.data;
-//   } catch (err) {
-//     console.log(err);
-//   }
-
-//   let provinces = [];
-//   // Grab only the provinces that are enabled
-//   provinces = provincesData ? provincesData.data.filter(province => province.display_status == 1) : [];
-//   // Reverse the province list to order them
-//   provinces = provinces.reverse();
-//   // Add provinces to our pageProps
-//   pageProps.provinceData = provinces;
-
-//   // Fetch categories data using an API call
-//   let categoriesData = null;
-//   try {
-//     const response = await axios.get(`${apiUrl}/categories/all`);
-//     categoriesData = await response.data;
-//   } catch (err) {
-//     console.log(err);
-//   }
-  
-//   // Add categories data to our pageProps and add only the ones that are active
-//   let categories = [];
-//   categories = categoriesData ? categoriesData.data.filter(category => category.display_status == 1) : [];
-//   pageProps.categoriesData = categories;
-
-//   if (appContext.Component.getInitialProps) {
-//     pageProps = await appContext.Component.getInitialProps(appContext.ctx);
-//   };
-
-//   return {
-//     pageProps
-//   };
-// };
 
 export default MyApp;

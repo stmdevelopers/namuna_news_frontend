@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { BASE_URL, getTodaysDate } from "./Helpers";
 
 export default function Footer(props) {
-  // State declarations
+  // State declarations for Provinces Data
   const [provinceData, setProvinceData] = useState(null);
   
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function Footer(props) {
     // Sort the categories list according to their id
     categoriesList.sort((cat1, cat2) => cat1.id - cat2.id);
   }
-  // Intialize footer categories array
+  // Initialize footer categories array
   let footerCategories = []
   // Populate the Footer categories
   for (let i=0; i<categoriesList.length; i++) {
@@ -42,23 +42,64 @@ export default function Footer(props) {
     }
   }
 
-  function subscribeEmail(email) {
+  // State declarations for Email Subscription
+  const [subscribeEmail, setSubscribeEmail] = useState("");
+  const [loadingStatus, setLoadingStatus] = useState(false);
+  const [feedbackMessage, setFeedbackMessage] = useState(null);
 
+  function subscribeToEmail(e) {
+    e.preventDefault();
+    const apiUrl = BASE_URL + "/api";
+
+    // Set the loading state to true
+    setLoadingStatus(true);
+
+    // Subscribe to email through the API
+    axios.post(apiUrl + `/subscribers`, {
+      "email": subscribeEmail
+    })
+    .then(res => res.data)
+    .then(res => {
+      // Disable the loading status and display the success message
+      setLoadingStatus(false);
+      if (res[0] == "Subscribed to news portal successfully") {
+        setFeedbackMessage("Subscribed to Namuna News successfully!")
+      }
+    })
+    .catch(err => {
+      console.log(err.message);
+      // Disable the loading status and display the error message
+      setLoadingStatus(false);
+      setFeedbackMessage("Something went wrong! Please try again.");
+    })
+  }
+
+  // Function to handle the subscription email input change
+  function emailInputChangeHandler(e) {
+    setSubscribeEmail(e.target.value);
   }
 
   return (
     <footer className="footer">
-      <section className="subscribe-section">
+      <section className="subscribe-section mb-4">
         <h2 className="subscribe-title">Subscribe</h2>
         <p className="subscribe-text">Get Namuna News free every morning and evening.</p>
-        <form method="POST" action="#" className="subscribe-form">
+        <form onSubmit={subscribeToEmail} className="subscribe-form">
           <div className="input-group">
             <span className="email-icon"><ion-icon name="mail-outline"></ion-icon></span>
-            <input type="text" name="subscribe" className="form-control" placeholder="Enter your email address..." aria-label="subscribe" aria-describedby="btn-subscribe" />
+            <input type="email" name="email" required onChange={emailInputChangeHandler} className="form-control" placeholder="Enter your email address..." aria-label="subscribe" aria-describedby="btn-subscribe" />
             <div className="input-group-append">
               <input type="submit" value="Subscribe" id="btn-subscribe" className="btn btn-danger btn-subscribe" />
             </div>
           </div>
+          {loadingStatus && (
+            <div className="spinner-border text-light mt-3" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
+          )}
+          {feedbackMessage && (
+            <p className="text-warning mt-3 mb-0">{feedbackMessage}</p>
+          )}
         </form>
       </section>
 
